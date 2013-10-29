@@ -1,16 +1,27 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
+from tasks.models import TaskList, Task
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class TaskListMethodTests(TestCase):
+    TASKLIST_TITLE = 'TEST___TESTTASKLIST'
+    TASKLIST_DESCR = 'A TEST TASK LIST'
+    TASKLIST_CATEG = 'TESTING'
+
+    def test_create_tasklist(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests that task lists can be added to the database.
         """
-        self.assertEqual(1 + 1, 2)
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        retreived_tasklist = None
+        try:
+            tasklist.save()
+            retreived_tasklist = TaskList.objects.get(title=self.TASKLIST_TITLE)
+            self.assertEqual(tasklist, retreived_tasklist)
+            retreived_tasklist.delete()
+            preserved_retreived = TaskList.objects.filter(title=self.TASKLIST_TITLE)
+            self.assertTrue(not preserved_retreived)
+        except:
+            self.assertTrue(False)
