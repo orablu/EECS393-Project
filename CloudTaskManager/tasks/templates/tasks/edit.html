@@ -1,0 +1,11 @@
+<h1>Edit: {{ tasklist.title }}</h1>
+
+<form action="{% url 'tasks:save' tasklist.id %}" method="post">
+{% csrf_token %}
+{% for task in tasklist.task_set.all %}
+    <input type="text" name="title" id="title{{ forloop.counter }}" value="{{ task.title }}" />
+    <input type="text" name="description" id="description{{ forloop.counter }}" value="{{ task.description }}" />
+    <br />
+{% endfor %}
+<input type="submit" value="save" />
+</form>

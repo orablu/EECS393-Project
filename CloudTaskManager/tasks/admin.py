@@ -1,5 +1,5 @@
 from django.contrib import admin
-from task.models import TaskList, Task
+from tasks.models import TaskList, Task
 
 class TaskInline(admin.TabularInline):
     model = Task
