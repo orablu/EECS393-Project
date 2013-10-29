@@ -1,3 +1,7 @@
+<html>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}" />
+
 <h1>Edit: {{ tasklist.title }}</h1>
 
 <form action="{% url 'tasks:save' tasklist.id %}" method="post">
@@ -9,3 +13,4 @@
 {% endfor %}
 <input type="submit" value="Save List" />
 </form>
+</html>
