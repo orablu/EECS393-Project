@@ -15,3 +15,5 @@ def edit(request, list_id):
     context = {'tasklist': get_object_or_404(TaskList, pk=list_id)}
     return render(request, 'tasks/edit.html', context)
 
+def save(request, list_id):
+    return HttpResponse("Saved! (not actually though)")
