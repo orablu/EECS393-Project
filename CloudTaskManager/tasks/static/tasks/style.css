@@ -18,12 +18,14 @@
 }
 
 .details_task .statusTrue {
+    color: green;
     background-image:url("images/checked");
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .details_task .statusFalse {
+    color: red;
     background-image:url("images/unchecked");
     padding-left: 5px;
     padding-right: 5px;

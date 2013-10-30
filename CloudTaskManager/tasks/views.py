@@ -58,6 +58,7 @@ def check_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     tasklist = task.task_list
     task.is_completed = not task.is_completed
+    task.save()
     return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))
 
 
