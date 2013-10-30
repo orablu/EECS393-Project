@@ -2,17 +2,21 @@
 
 {% block body %}
     <h1>Index</h1>
-
     {% if task_list_list %}
         {% for tasklist in task_list_list %}
-            <div class="index_tasklist">
-                <span class="list"><a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}: {{ tasklist.description }}</a></span>
-                <span class="delete"><a href="{% url 'tasks:delete_list' tasklist.id %}">x<!-- TODO: Add 'x' image and remove--></a></span>
+        <div class="index_tasklist">
+                <span class="list">
+                    <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}: {{ tasklist.description }}</a>
+                </span>
+                <span class="delete">
+                    <a href="{% url 'tasks:delete_list' tasklist.id %}">[x]<!-- TODO: Add 'x' image and remove--></a>
+                </span>
             </div>
         {% endfor %}
     {% else %}
-        <p>You have no task lists!</p>
+        <p class="index_tasklist">You have no task lists!</p>
     {% endif %}
-
-    <form action = "addList/"><button type = "submit">Add List</button></form>
+    <form class="addbutton" action = "addList/">
+        <button type = "submit">Add List</button>
+    </form>
 {% endblock %}

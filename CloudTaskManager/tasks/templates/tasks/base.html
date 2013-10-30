@@ -7,6 +7,12 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% block body %}{% endblock %}
+    <span class="base_left">
+        <a class="home_link" href="{% url 'tasks:index' %}">Home</a>
+        {% block links %}{% endblock %}
+    </span>
+    <span class="base_right">
+        {% block body %}{% endblock %}
+    </span>
   </body>
 </html>

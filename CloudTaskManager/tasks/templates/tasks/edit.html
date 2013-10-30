@@ -1,21 +1,13 @@
-<html>
+{% extends "tasks/base.html" %}
 
-<head>
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}" />
-</head>
+{% block links %}
+<a href="{% url 'tasks:details' tasklist.id %}">Back to {{ tasklist.title }}</a>
+{% endblock %}
 
-<body>
-
-<span class="left">
-<h1>E<br/>D<br/>I<br/>T</h1>
-</span>
-<span class="right">
-<form method="post">
-{%csrf_token%}
-{{form.as_p}}
-<input type="submit" value="Save Task" />
-</form>
-</span>
-</body>
-</html>
+{% block body %}
+    <form method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <input type="submit" value="Save Task" />
+    </form>
+{% endblock %}
