@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form action="{% url 'tasks:save_new_task' tasklist.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="title"       id="title"       value="" />
+        <input type="text" name="description" id="description" value="" />
+        <input type="text" name="category"    id="category"    value="" />
+        <input type="text" name="due_date"    id="due_date"    value="" />
+        <input type="text" name="completed"   id="completed"   value="" />
+        <input type="hidden" name="id" value="{{ tasklist.id }}">
+        <input type="submit" value="Save Task" />
+    </form>
+{% endblock %}
