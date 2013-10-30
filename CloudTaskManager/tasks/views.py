@@ -17,6 +17,7 @@ def details(request, list_id):
         'list_id': list_id}
     return render(request, 'tasks/details.html', context)
 
+
 def addTask(request, list_id):
 	tasklist, created = TaskList.objects.get_or_create(pk=list_id)
 	if request.method == 'POST':
@@ -49,6 +50,19 @@ def addList(request):
 
 def save(request, list_id):
     return HttpResponse("Saved! (not actually though)")
+
+
+def check_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    tasklist = task.task_list
+    task.is_completed = not task.is_completed
+    return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))
+
+
+def delete_list(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    tasklist.delete()
+    return HttpResponseRedirect('/tasklists/')
 
 
 def delete_task(request, task_id):

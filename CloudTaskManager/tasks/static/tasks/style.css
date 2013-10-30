@@ -1,3 +1,11 @@
+.details_task .statusTrue {
+    background-image:url("images/checked");
+}
+
+.details_task .statusFalse {
+    background-image:url("images/unchecked");
+}
+
 .left { 
 color: green; 
 display:inline-block;
