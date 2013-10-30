@@ -28,13 +28,14 @@ def new_task(request, list_id):
     return render(request, 'tasks/new_task.html', context)
 
 
-def save_list(request):
-    return HttpResponse("Saved! (not actually though)")
+def save_list(request, list_id):
+    if request.method is not "POST":
+        return HttpResponse('Fut the wuk this is wrong')
 
 
-def save_task(request):
-    return HttpResponse("Saved! (not actually though)")
+def save_task(request, task_id):
+    return HttpResponse("Saved {0}! (not actually though)".format(task_id))
 
 
-def save_new_task(request):
-    return HttpResponse("Saved! (not actually though)")
+def save_new_task(request, list_id):
+    return HttpResponse("Saved {0}! (not actually though)".format(list_id))

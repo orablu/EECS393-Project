@@ -1,2 +1,11 @@
-<h1>{{ tasklist.title }} ({{ tasklist.category }})</h1>
-<div>{{ tasklist.description }}</div>
+{% extends "tasks/base.html" %}
+
+{% block body %}
+    <h1>{{ tasklist.title }} ({{ tasklist.category }})</h1>
+    <div>{{ tasklist.description }}</div>
+    <ul>
+    {% for task in tasklist.task_set.all %}
+        <li>{{ task.title }}: {{ task.description }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
