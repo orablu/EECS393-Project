@@ -10,4 +10,5 @@ urlpatterns = patterns('',
         url(r'^(?P<list_id>\d+)/save/$', views.save, name='save'),
         url(r'^(?P<list_id>\d+)/delete/$', views.delete_list, name='delete_list'),
         url(r'^tasks/(?P<task_id>\d+)/delete/$', views.delete_task, name='delete_task'),
+        url(r'^tasks/(?P<task_id>\d+)/check/$', views.check_task, name='check_task'),
 )
