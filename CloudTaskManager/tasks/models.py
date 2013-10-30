@@ -28,7 +28,7 @@ class Task(models.Model):
     #order = models.IntegerField(default=0) # TODO: Add
     description = models.CharField(max_length=MODELS_DESCRLENGTH)
     category = models.CharField(max_length=MODELS_CATEGLENGTH)
-    due_date = models.DateTimeField('Due')
+    due_date = models.DateTimeField('Due', null=True, blank=True)
     is_completed = models.BooleanField('Completed?', default=False)
 
     def is_late(self):

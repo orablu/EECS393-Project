@@ -1,6 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from tasks.models import Task
 
-class TaskForm(forms.Form):
-	title = forms.CharField()
-	description = forms.CharField(required=False)
-	due_date = forms.DateTimeField(required=False)
+class TaskForm(ModelForm):
+	class Meta:
+		model = Task
+		fields = ['title', 'description', 'task_list', 'due_date']
