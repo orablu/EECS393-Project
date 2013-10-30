@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task
+from tasks.forms import TaskForm
 
 
 def index(request):
@@ -9,32 +10,23 @@ def index(request):
 
 
 def details(request, list_id):
-    context = {'tasklist': get_object_or_404(TaskList, pk=list_id)}
-    return render(request, 'tasks/details.html', context)
+	try:
+		tasklist = TaskList.objects.get(pk=list_id)
+		tasks_list = tasklist.task_set.all()
+		context = {'tasklist': tasklist, 'tasks_list': tasks_list}
+	except:
+		raise Http404
+	return render(request, 'tasks/details.html', context)
 
 
-def edit_list(request, list_id):
-    context = {'tasklist': get_object_or_404(TaskList, pk=list_id)}
-    return render(request, 'tasks/edit_list.html', context)
+def edit(request, list_id):
+	if request.method == 'POST':
+		form = TaskForm(request.POST)
+		if form.is_valid():
+			title = form.cleaned_data['title']
+			description = form.cleaned_data['description']
+			form.save(title, description)
 
 
-def edit_task(request, task_id):
-    context = {'task': get_object_or_404(Task, pk=task_id)}
-    return render(request, 'tasks/edit_task.html', context)
-
-
-def new_task(request, list_id):
-    context = {'list_id': list_id}
-    return render(request, 'tasks/new_task.html', context)
-
-
-def save_list(request):
-    return HttpResponse("Saved! (not actually though)")
-
-
-def save_task(request):
-    return HttpResponse("Saved! (not actually though)")
-
-
-def save_new_task(request):
+def save(request, list_id):
     return HttpResponse("Saved! (not actually though)")
