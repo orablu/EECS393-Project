@@ -1,0 +1,11 @@
+.left { 
+color: green; 
+display:inline-block;
+width:30%;
+}
+
+.right{
+text-align:center;
+display:inline-block;
+margin-top:15px;
+}

@@ -2,7 +2,7 @@
 
 {% if task_list_list %}
     {% for tasklist in task_list_list %}
-        <div><a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}: {{ tasklist.description }}</div>
+        <div class="shbob"><a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}: {{ tasklist.description }}</div>
     {% endfor %}
 {% else %}
     <p>You have no task lists!</p>
