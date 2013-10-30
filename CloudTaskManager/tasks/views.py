@@ -17,20 +17,19 @@ def details(request, list_id):
         'list_id': list_id}
     return render(request, 'tasks/details.html', context)
 
-def addTask(request, list_id):
-	if request.method == 'POST':
-		tasklist, created = TaskList.objects.get_or_create(pk=list_id)
-		task = Task(task_list=tasklist)
-		form = TaskForm(request.POST, instance=task)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/tasklists/' + list_id + '/')
-	else:
-		form = TaskForm()
-	return render(request, 'tasks/addTask.html', {'form': form,})
 
-def edit(request, list_id):
-	return render('tasks/edit.html')
+def addTask(request, list_id):
+    if request.method == 'POST':
+        tasklist, created = TaskList.objects.get_or_create(pk=list_id)
+        task = Task(task_list=tasklist)
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
+    else:
+        form = TaskForm()
+    return render(request, 'tasks/addTask.html', {'form': form})
+
 
 def addList(request):
     if request.method == 'POST':
@@ -46,6 +45,12 @@ def addList(request):
 
 def save(request, list_id):
     return HttpResponse("Saved! (not actually though)")
+
+
+def delete_list(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    tasklist.delete()
+    return HttpResponseRedirect('/tasklists/')
 
 
 def delete_task(request, task_id):
