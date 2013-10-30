@@ -66,7 +66,7 @@ STATIC_ROOT = ''
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/tasklists/1/'
+LOGIN_REDIRECT_URL = '/tasklists/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
