@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
@@ -10,15 +10,12 @@ def index(request):
 
 
 def details(request, list_id):
-	try:
-		tasklist = TaskList.objects.get(pk=list_id)
-		tasks_list = tasklist.task_set.all()
-		context = {'tasklist': tasklist,
-			'tasks_list': tasks_list,
-			'list_id': list_id}
-	except:
-		raise Http404
-	return render(request, 'tasks/details.html', context)
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    tasks_list = tasklist.task_set.all()
+    context = {'tasklist': tasklist,
+        'tasks_list': tasks_list,
+        'list_id': list_id}
+    return render(request, 'tasks/details.html', context)
 
 def addTask(request, list_id):
 	if request.method == 'POST':
@@ -36,16 +33,23 @@ def edit(request, list_id):
 	return render('tasks/edit.html')
 
 def addList(request):
-	if request.method == 'POST':
-		tasklist = TaskList()
-		form = ListForm(request.POST, instance=tasklist)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/tasklists/')
-	else:
-		form = ListForm()
-	return render(request, 'tasks/addList.html', {'form': form})
+    if request.method == 'POST':
+        tasklist = TaskList()
+        form = ListForm(request.POST, instance=tasklist)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tasklists/')
+    else:
+        form = ListForm()
+    return render(request, 'tasks/addList.html', {'form': form})
 
 
 def save(request, list_id):
     return HttpResponse("Saved! (not actually though)")
+
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    tasklist = task.task_list
+    task.delete()
+    return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))

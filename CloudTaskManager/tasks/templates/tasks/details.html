@@ -1,6 +1,6 @@
 <h1>{{ tasklist.title }} ({{ tasklist.category }})</h1>
 <div>Description: {{ tasklist.description }}</div>
 {% for task in tasks_list %}
-	<div>{{ task.title }} -- {{ task.description }}</div>
+<div>{{ task.title }} -- {{ task.description }}<!-- TODO: Add 'x' image !--><a href="{% url 'tasks:delete_task' task.id %}">x</a></div>
 {% endfor %}
 <form action = "addTask/"><button type = "submit">Add Task</button></form>
