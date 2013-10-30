@@ -1,5 +1,4 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
@@ -31,16 +30,17 @@ def edit(request, list_id):
         form = TaskForm()
     return render(request, 'tasks/edit.html', {'form': form})
 
+
 def addList(request):
-	if request.method == 'POST':
-		tasklist = TaskList()
-		form = ListForm(request.POST, instance=tasklist)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/tasklists/')
-	else:
-		form = ListForm()
-	return render(request, 'tasks/addList.html', {'form': form})
+    if request.method == 'POST':
+        tasklist = TaskList()
+        form = ListForm(request.POST, instance=tasklist)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tasklists/')
+    else:
+        form = ListForm()
+    return render(request, 'tasks/addList.html', {'form': form})
 
 
 def save(request, list_id):
