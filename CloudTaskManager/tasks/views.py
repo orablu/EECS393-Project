@@ -20,8 +20,7 @@ def details(request, list_id):
 		raise Http404
 	return render(request, 'tasks/details.html', context)
 
-
-def edit(request, list_id):
+def addTask(request, list_id):
 	if request.method == 'POST':
 		tasklist, created = TaskList.objects.get_or_create(pk=list_id)
 		task = Task(task_list=tasklist)
@@ -31,7 +30,10 @@ def edit(request, list_id):
 			return HttpResponseRedirect('/tasklists/' + list_id + '/')
 	else:
 		form = TaskForm()
-	return render(request, 'tasks/edit.html', {'form': form,})
+	return render(request, 'tasks/addTask.html', {'form': form,})
+
+def edit(request, list_id):
+	return render('tasks/edit.html')
 
 def addList(request):
 	if request.method == 'POST':
