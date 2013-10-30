@@ -14,7 +14,7 @@ MODELS_TOMORROWSTR = 'due tomorrow'
 
 class TaskList(models.Model):
     title = models.CharField(max_length=MODELS_TITLELENGTH)
-    description = models.CharField(max_length=MODELS_DESCRLENGTH)
+    description = models.CharField(max_length=MODELS_DESCRLENGTH, null=True, blank=True)
     category = models.CharField(max_length=MODELS_CATEGLENGTH)
     # users = models.ManyToManyfield(User)
 
@@ -26,7 +26,7 @@ class Task(models.Model):
     task_list = models.ForeignKey(TaskList)
     title = models.CharField(max_length=MODELS_TITLELENGTH)
     #order = models.IntegerField(default=0) # TODO: Add
-    description = models.CharField(max_length=MODELS_DESCRLENGTH)
+    description = models.CharField(max_length=MODELS_DESCRLENGTH, null=True, blank=True)
     category = models.CharField(max_length=MODELS_CATEGLENGTH)
     due_date = models.DateTimeField('Due', null=True, blank=True)
     is_completed = models.BooleanField('Completed?', default=False)
