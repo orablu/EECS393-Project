@@ -18,19 +18,22 @@ def details(request, list_id):
     return render(request, 'tasks/details.html', context)
 
 def addTask(request, list_id):
+	tasklist, created = TaskList.objects.get_or_create(pk=list_id)
 	if request.method == 'POST':
-		tasklist, created = TaskList.objects.get_or_create(pk=list_id)
 		task = Task(task_list=tasklist)
 		form = TaskForm(request.POST, instance=task)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('/tasklists/' + list_id + '/')
 	else:
-		form = TaskForm()
+		task = Task(task_list=tasklist)
+		form = TaskForm(instance=task)
 	return render(request, 'tasks/addTask.html', {'form': form,})
 
-def edit(request, list_id):
-	return render('tasks/edit.html')
+def edit(request, task_id):
+	task = get_object_or_404(Task, pk=task_id)
+	form = TaskForm(instance=task)
+	return render(request, 'tasks/edit.html', {'form': form})
 
 def addList(request):
     if request.method == 'POST':

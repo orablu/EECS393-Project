@@ -11,7 +11,11 @@
 <h1>E<br/>D<br/>I<br/>T</h1>
 </span>
 <span class="right">
-
+<form method="post">
+{%csrf_token%}
+{{form.as_p}}
+<input type="submit" value="Save Task" />
+</form>
 </span>
 </body>
 </html>
