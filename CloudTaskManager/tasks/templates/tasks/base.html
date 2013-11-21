@@ -9,6 +9,8 @@
   <body>
     <span class="base_left">
         <a class="home_link" href="{% url 'tasks:index' %}">Home</a>
+        <a class="login_link" href="{% url 'login' %}">Log in</a>
+        <a class="logout_link" href="{% url 'logout' %}">Log out</a>
         {% block links %}{% endblock %}
     </span>
     <span class="base_right">

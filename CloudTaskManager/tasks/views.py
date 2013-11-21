@@ -4,10 +4,12 @@ from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def index(request):
     context = {'task_list_list': TaskList.objects.order_by('title')}
     return render(request, 'tasks/index.html', context)
+
 
 @login_required
 def details(request, list_id):
@@ -17,6 +19,7 @@ def details(request, list_id):
         'tasks_list': tasks_list,
         'list_id': list_id}
     return render(request, 'tasks/details.html', context)
+
 
 @login_required
 def addTask(request, list_id):
@@ -32,11 +35,19 @@ def addTask(request, list_id):
         form = TaskForm(instance=task)
     return render(request, 'tasks/addTask.html', {'form': form})
 
+
 @login_required
 def edit(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    form = TaskForm(instance=task)
+    if request.method is 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tasklists/' + task.task_list.id + '/')
+    else:
+        form = TaskForm(instance=task)
     return render(request, 'tasks/edit.html', {'tasklist': task.task_list, 'form': form})
+
 
 @login_required
 def addList(request):
@@ -50,9 +61,11 @@ def addList(request):
         form = ListForm()
     return render(request, 'tasks/addList.html', {'form': form})
 
+
 @login_required
 def save(request, list_id):
     return HttpResponse("Saved! (not actually though)")
+
 
 @login_required
 def check_task(request, task_id):
@@ -62,11 +75,13 @@ def check_task(request, task_id):
     task.save()
     return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))
 
+
 @login_required
 def delete_list(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     tasklist.delete()
     return HttpResponseRedirect('/tasklists/')
+
 
 @login_required
 def delete_task(request, task_id):

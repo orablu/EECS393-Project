@@ -1,7 +1,10 @@
 .base_left {
     display: inline-block;
+    height: 1000px;
+    border-right: 1px solid black;
     vertical-align: top;
-    margin-right: 30px;
+    padding-right: 30px;
+    margin-right: 10px;
 }
 
 .base_left a {
