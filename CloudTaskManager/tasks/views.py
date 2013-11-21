@@ -13,7 +13,7 @@ def index(request):
 @login_required
 def details(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
-    tasks_list = tasklist.task_set.all()
+    tasks_list = tasklist.task_set.all().order_by('due_date')
     context = {'tasklist': tasklist,
         'tasks_list': tasks_list,
         'list_id': list_id}
