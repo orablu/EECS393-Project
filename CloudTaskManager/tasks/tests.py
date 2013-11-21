@@ -1,5 +1,6 @@
 from django.test import TestCase
 from tasks.models import TaskList, Task
+import tasks.forms
 from django.utils import timezone
 import datetime
 
