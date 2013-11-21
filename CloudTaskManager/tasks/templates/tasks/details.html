@@ -7,7 +7,7 @@
         <div class="details_task">
         	<a href="{% url 'tasks:edit' task.id %}">Edit</a>
             <span class="task">{{ task.title }} -- {{ task.description }}</span>
-            <a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">-</span></a>
+            <a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">{%if task.is_completed%}[+]{%else%}[-]{%endif%}</span></a>
             <span class="delete"><a href="{% url 'tasks:delete_task' task.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></span>
         </div>
     {% endfor %}
