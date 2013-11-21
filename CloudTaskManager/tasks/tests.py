@@ -1,5 +1,6 @@
 from django.test import TestCase
 from tasks.models import TaskList, Task
+from django.utils import timezone
 import datetime
 
 class TaskListMethodTests(TestCase):
@@ -54,7 +55,7 @@ class TaskListMethodTests(TestCase):
         except:
             self.assertTrue(False)
 
-    def test_is_late(self):
+    def test_is_late_true(self):
         """
         Tests that tasks can be late
         """
@@ -69,4 +70,100 @@ class TaskListMethodTests(TestCase):
                 due_date=self.TASK_DUEDATE,
                 is_completed=False)
         self.assertTrue(task.is_late())
-	
+		
+    def test_is_late_false(self):
+        """
+        Tests that tasks can be late
+        """
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date = timezone.now() + datetime.timedelta(days=2) 
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertFalse(task.is_late())
+
+    def test_is_due_this_week_false(self):
+        """
+        Tests that we return false if task is not due this week
+        """
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=self.TASK_DUEDATE,
+                is_completed=False)
+        self.assertFalse(task.is_due_this_week())
+
+    def test_is_due_this_week_true(self):
+        """
+        Tests that if something is due this week, we display that it is
+        """
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() - datetime.timedelta(days=1)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertFalse(task.is_due_this_week())
+
+    def test_is_due_tomorrow_false(self):
+        """
+        Tests that if something is not due tomorrow, we don't display that it is due tomorrow
+        """
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=self.TASK_DUEDATE,
+                is_completed=False)
+        self.assertFalse(task.is_due_tomorrow())
+
+    def test_is_due_tomorrow_true(self):
+        """
+        Tests that if something is not due tomorrow, we don't display that it is due tomorrow
+        """
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() + datetime.timedelta(days=1)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertTrue(task.is_due_tomorrow())
+
+    def test_status_none(self):
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() + datetime.timedelta(days=15)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertEquals(task.status(), None)
