@@ -4,7 +4,6 @@ from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
 from django.contrib.auth.decorators import login_required
 
-
 @login_required
 def index(request):
     context = {'task_list_list': TaskList.objects.order_by('title')}
@@ -14,7 +13,7 @@ def index(request):
 @login_required
 def details(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
-    tasks_list = tasklist.task_set.all()
+    tasks_list = tasklist.task_set.all().order_by('due_date')
     context = {'tasklist': tasklist,
         'tasks_list': tasks_list,
         'list_id': list_id}
@@ -38,15 +37,15 @@ def addTask(request, list_id):
 
 @login_required
 def edit(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    if request.method is 'POST':
-        form = TaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/tasklists/' + task.task_list.id + '/')
-    else:
-        form = TaskForm(instance=task)
-    return render(request, 'tasks/edit.html', {'tasklist': task.task_list, 'form': form})
+	task = get_object_or_404(Task, pk=task_id)
+	if request.method == 'POST':
+		form = TaskForm(request.POST, instance=task)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/tasklists/' + str(task.task_list.id) + '/')
+	else:
+		form = TaskForm(instance=task)
+	return render(request, 'tasks/edit.html', {'tasklist': task.task_list, 'form': form})
 
 
 @login_required

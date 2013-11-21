@@ -3,13 +3,27 @@
 {% block body %}
     <h1>{{ tasklist.title }} ({{ tasklist.category }})</h1>
     <h2>Description: {{ tasklist.description }}</h2>
-    {% for task in tasks_list %}
-        <div class="details_task">
-        	<a href="{% url 'tasks:edit' task.id %}">Edit</a>
-            <span class="task">{{ task.title }} -- {{ task.description }}</span>
-            <a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">{%if task.is_completed%}[+]{%else%}[-]{%endif%}</span></a>
-            <span class="delete"><a href="{% url 'tasks:delete_task' task.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></span>
-        </div>
-    {% endfor %}
+	<div class="details_task">
+		<table border="1">
+			<tr>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Due</th>
+				<th>Completed</th>
+				<th>Delete</th>
+				<th>Edit</th>
+			</tr>
+			{% for task in tasks_list %}
+			<tr>
+				<th>{{ task.title }}</th>
+				<th>{{ task.description }}</th>
+				<th>{{ task.due_date|date:"d/m/y g:i a" }}
+				<th><a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">{%if task.is_completed%}[+]{%else%}[-]{%endif%}</span></a></th>
+				<th><span class="delete"><a href="{% url 'tasks:delete_task' task.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></span></th>
+				<th><a href="{% url 'tasks:edit' task.id %}">[E]</a></th>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
     <form class="addbutton" action="addTask/"><button type="submit">Add Task</button></form>
 {% endblock %}
