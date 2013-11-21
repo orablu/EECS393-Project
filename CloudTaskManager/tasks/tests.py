@@ -166,4 +166,46 @@ class TaskListMethodTests(TestCase):
                 category=self.TASK_CATEGORY,
                 due_date=new_due_date,
                 is_completed=False)
-        self.assertEquals(task.status(), None)
+        self.assertEqual(task.status(), None)
+
+    def test_status_late(self):
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() - datetime.timedelta(days=15)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertEqual(task.status(), 'late')
+
+    def test_status_is_due_this_week(self):
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() + datetime.timedelta(days=4)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertEqual(task.status(), 'due soon')
+
+    def test_status_is_due_tomorrow(self):
+        tasklist = TaskList(
+                title=self.TASKLIST_TITLE,
+                description=self.TASKLIST_DESCR,
+                category=self.TASKLIST_CATEG)
+        new_due_date=timezone.now() + datetime.timedelta(days=1)
+        task = Task(task_list=tasklist,
+                title=self.TASK_TITLE,
+                description=self.TASK_DESCR,
+                category=self.TASK_CATEGORY,
+                due_date=new_due_date,
+                is_completed=False)
+        self.assertEqual(task.status(), 'due tomorrow')
