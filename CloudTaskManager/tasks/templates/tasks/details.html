@@ -15,12 +15,12 @@
 			</tr>
 			{% for task in tasks_list %}
 			<tr>
-				<th>{{ task.title }}</th>
-				<th>{{ task.description }}</th>
-				<th>{{ task.due_date|date:"d/m/y g:i a" }}
-				<th><a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">{%if task.is_completed%}[+]{%else%}[-]{%endif%}</span></a></th>
-				<th><span class="delete"><a href="{% url 'tasks:delete_task' task.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></span></th>
-				<th><a href="{% url 'tasks:edit' task.id %}">[E]</a></th>
+				<td>{{ task.title }}</td>
+				<td>{{ task.description }}</td>
+				<td>{{ task.due_date|date:"d/m/y g:i a" }}</td>
+				<td><a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">{%if task.is_completed%}[+]{%else%}[-]{%endif%}</span></a></td>
+				<td><span class="delete"><a href="{% url 'tasks:delete_task' task.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></span></td>
+				<td><a href="{% url 'tasks:edit' task.id %}">[E]</a></td>
 			</tr>
 			{% endfor %}
 		</table>
