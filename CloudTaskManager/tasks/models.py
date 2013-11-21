@@ -47,10 +47,10 @@ class Task(models.Model):
     def status(self):
         if self.is_late():
             return MODELS_LATESTR
-        if self.is_due_this_week():
-            return MODELS_SOONSTR
         if self.is_due_tomorrow():
             return MODELS_TOMORROWSTR
+        if self.is_due_this_week():
+            return MODELS_SOONSTR
     status.admin_order_field = 'due_date'
     status.short_description = 'Status'
 
