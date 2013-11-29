@@ -25,15 +25,17 @@ def details(request, list_id):
 def addTask(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        #form = TaskForm(request.POST)
+        task = Task(tasklist=tasklist)
+        form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            #form.save()
-            task = Task(tasklist=tasklist,
-                        title=form.cleaned_data['title'],
-                        description=form.cleaned_data['description'],
-                        due_date=form.cleaned_data['due_date'],
-                        category=form.cleaned_data['category'])
-            task.save()
+            form.save()
+            #task = Task(tasklist=tasklist,
+                        #title=form.cleaned_data['title'],
+                        #description=form.cleaned_data['description'],
+                        #due_date=form.cleaned_data['due_date'],
+                        #category=form.cleaned_data['category'])
+            #task.save()
             return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
     return render(request, 'tasks/addTask.html', {'form': form})
 
@@ -42,14 +44,14 @@ def addTask(request, list_id):
 def edit(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            #form.save()
-            task.title = form.cleaned_data['title']
-            task.description = form.cleaned_data['description']
-            task.category = form.cleaned_data['category']
-            task.due_date = form.cleaned_data['due_date']
-            task.save()
+            form.save()
+            #task.title = form.cleaned_data['title']
+            #task.description = form.cleaned_data['description']
+            #task.category = form.cleaned_data['category']
+            #task.due_date = form.cleaned_data['due_date']
+            #task.save()
             return HttpResponseRedirect(
                 '/tasklists/{0}/'.format(task.tasklist.id))
     else:
@@ -81,8 +83,9 @@ def save(request, list_id):
 def check_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     task.is_completed = not task.is_completed
+    id = task.tasklist.id
     task.save()
-    return HttpResponseRedirect('/tasklists/{0}/'.format(task.tasklist.id))
+    return HttpResponseRedirect('/tasklists/{0}/'.format(id))
 
 
 @login_required
