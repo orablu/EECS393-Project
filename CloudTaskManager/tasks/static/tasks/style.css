@@ -1,3 +1,8 @@
+body {
+    background-color: lightgrey;
+    background-image: url("images/tasks/checked");
+}
+
 .base_left {
     display: inline-block;
     height: 1000px;
@@ -22,44 +27,46 @@
 
 .details_task .statusTrue {
     color: green;
-    background-image:url("images/checked");
+    background-image:url("images/tasks/checked");
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .details_task .statusFalse {
     color: red;
-    background-image:url("images/unchecked");
+    background-image:url("images/tasks/unchecked");
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .index_tasklist {
-    background-color: lightgrey;
-
 }
 
 a:link {
     text-decoration: none;
-    color: black;
+    color: darkgrey;
 }
 
 a:visited {
     text-decoration: none;
-    color: black;
+    color: darkgrey;
 }
 
 a:hover {
     text-decoration: none;
-    color: black;
+    color: darkgrey;
 }
 
 a:focus {
     text-decoration: none;
-    color: black;
+    color: darkgrey;
 }
 
 a:active {
     text-decoration: none;
-    color: black;
+    color: darkgrey;
+}
+
+.field_wrapper {
+    display: block;
 }
