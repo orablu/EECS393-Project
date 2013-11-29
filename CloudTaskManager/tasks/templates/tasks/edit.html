@@ -1,7 +1,7 @@
 {% extends "tasks/base.html" %}
 
 {% block links %}
-<a href="{% url 'tasks:details' tasklist.id %}">Back to {{ tasklist.title }}</a>
+    <a href="{% url 'tasks:details' tasklist.id %}">Back to {{ tasklist.title }}</a>
 {% endblock %}
 
 {% block body %}

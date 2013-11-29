@@ -1,26 +1,23 @@
 {% extends "tasks/base.html" %}
 
 {% block body %}
-    <h1>Index</h1>
+    <h1>My lists</h1>
     {% if task_list_list %}
-        <table border="1">
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Delete</th>
-            </tr>
-            {% for tasklist in task_list_list %}
-            <tr>
-                <td><a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a></td>
-                <td>{{ tasklist.description }}</td>
-                <td><a href="{% url 'tasks:delete_list' tasklist.id %}">[x]<!-- TODO: Add 'x' image and remove--></a></td>
-            </tr>
-            {% endfor %}
-        </table>
+        {% for tasklist in task_list_list %}
+            <div class="list_div">
+                <div class="list_header">
+                    <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
+                    <a class="delete_link" href="{% url 'tasks:delete_list' tasklist.id %}">x</a>
+                </div>
+                <div class="list_description">
+                    <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                </div>
+            </div>
+        {% endfor %}
     {% else %}
-        <p class="index_tasklist">You have no task lists!</p>
+        <div class="list_header">You have no task lists!</div>
     {% endif %}
-    <form class="addbutton" action = "addList/">
+    <form class="add_button" action = "addList/">
         <button type = "submit">Add List</button>
     </form>
 {% endblock %}

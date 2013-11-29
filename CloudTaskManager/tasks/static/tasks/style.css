@@ -1,65 +1,128 @@
-.base_left {
-    display: inline-block;
-    height: 1000px;
-    border-right: 1px solid black;
+/*
+ * Site-wide styles
+ */
+
+.base_head {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 30px;
+    width: 100%;
+    background-color: #1e8cbe;
+    text-align: center;
+}
+
+.base_head a {
+    color: lightgrey;
+    vertical-align: center;
+    float: center;
+    /*display: inline-block;*/
+}
+
+.base_head .home_link {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.base_head .logout_link {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.base_head .extra_links {
+    margin: auto;
+    padding-top: 5px;
+}
+
+.base_body {
+    height: 100%;
+    width: 100%;
+    background-color: #eee;
+    position: absolute;
+    left: 0px;
+    top: 30px;
     vertical-align: top;
-    padding-right: 30px;
-    margin-right: 10px;
 }
 
-.base_left a {
-    display: block;
+.base_body a {
+    color: black;
+    vertical-align: center;
+    float: center;
+    /*display: inline-block;*/
 }
 
-.base_right {
-    display: inline-block;
-    vertical-align: top;
+.base_body .base_wrapper {
+    margin-left: 5px;
 }
 
-.addbutton {
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:focus {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*
+ * List index
+ */
+
+.list_div {
+    margin-bottom: 10px;
+}
+
+.list_header {
+    font-size: 150%;
+}
+
+.list_description {
+
+}
+
+.delete_link {
+
+}
+
+.add_button {
+    
     margin-top: 10px;
 }
 
+/*
+ * List details
+ */
+
 .details_task .statusTrue {
     color: green;
-    background-image:url("images/checked");
+    background-image:url("images/checked.png");
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .details_task .statusFalse {
     color: red;
-    background-image:url("images/unchecked");
+    background-image:url("images/unchecked.png");
     padding-left: 5px;
     padding-right: 5px;
-}
-
-.index_tasklist {
-    background-color: lightgrey;
-
-}
-
-a:link {
-    text-decoration: none;
-    color: black;
-}
-
-a:visited {
-    text-decoration: none;
-    color: black;
-}
-
-a:hover {
-    text-decoration: none;
-    color: black;
-}
-
-a:focus {
-    text-decoration: none;
-    color: black;
-}
-
-a:active {
-    text-decoration: none;
-    color: black;
 }
