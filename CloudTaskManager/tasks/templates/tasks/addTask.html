@@ -3,7 +3,11 @@
 {% block body %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+            <div class="field_wrapper">
+                {{ field.label }} {{ field }}
+            </div>
+        {% endfor %}
         <input type="submit" value="Save Task" />
     </form>
 {% endblock %}

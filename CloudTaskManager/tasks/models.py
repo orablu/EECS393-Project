@@ -1,33 +1,34 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User as AuthUser
 
-MODELS_TITLELENGTH = 50
-MODELS_DESCRLENGTH = 300
-MODELS_CATEGLENGTH = 20
-MODELS_LATESTR = 'late'
-MODELS_SOONSTR = 'due soon'
-MODELS_TOMORROWSTR = 'due tomorrow'
+TITLE_LENGTH = 50
+DESCR_LENGTH = 300
+CATEG_LENGTH = 20
+LATE_STR = 'late'
+SOON_STR = 'due soon'
+TOMORROW_STR = 'due tomorrow'
 
 # class User(models.Model):
 
 
 class TaskList(models.Model):
-    title = models.CharField(max_length=MODELS_TITLELENGTH)
-    description = models.CharField(max_length=MODELS_DESCRLENGTH, null=True, blank=True)
-    category = models.CharField(max_length=MODELS_CATEGLENGTH)
-    # users = models.ManyToManyfield(User)
+    title = models.CharField(max_length=TITLE_LENGTH)
+    description = models.CharField(max_length=DESCR_LENGTH, null=True, blank=True)
+    category = models.CharField(max_length=CATEG_LENGTH)
+    # users = models.ManyToManyField(User)
 
     def __str__(self):
         return '{0}: {1}'.format(self.title, self.description)
 
 
 class Task(models.Model):
-    task_list = models.ForeignKey(TaskList)
-    title = models.CharField(max_length=MODELS_TITLELENGTH)
+    tasklist = models.ForeignKey(TaskList)
+    title = models.CharField(max_length=TITLE_LENGTH)
     #order = models.IntegerField(default=0) # TODO: Add
-    description = models.CharField(max_length=MODELS_DESCRLENGTH, null=True, blank=True)
-    category = models.CharField(max_length=MODELS_CATEGLENGTH)
+    description = models.CharField(max_length=DESCR_LENGTH, null=True, blank=True)
+    category = models.CharField(max_length=CATEG_LENGTH)
     due_date = models.DateTimeField('Due', null=True, blank=True)
     is_completed = models.BooleanField('Completed?', default=False)
 
@@ -46,13 +47,29 @@ class Task(models.Model):
 
     def status(self):
         if self.is_late():
-            return MODELS_LATESTR
+            return LATE_STR
         if self.is_due_tomorrow():
-            return MODELS_TOMORROWSTR
+            return TOMORROW_STR
         if self.is_due_this_week():
-            return MODELS_SOONSTR
+            return SOON_STR
     status.admin_order_field = 'due_date'
     status.short_description = 'Status'
 
     def __str__(self):
         return '{0}: {1}'.format(self.title, self.description)
+
+
+class User(models.Model):
+    authuser = models.ForeignKey(AuthUser)
+    owned = models.ManyToManyField(TaskList, related_name='xw+')
+    shared = models.ManyToManyField(TaskList, related_name='rw+')
+    readonly = models.ManyToManyField(TaskList, related_name='ro+')
+
+    def get_username(self):
+        return self.authuser.get_username()
+
+    def get_firstname(self):
+        return self.authuser.first_name
+
+    def get_name(self):
+        return self.authuser.get_full_name()

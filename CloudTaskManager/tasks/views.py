@@ -4,6 +4,7 @@ from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def index(request):
     context = {'task_list_list': TaskList.objects.order_by('title')}
@@ -15,37 +16,47 @@ def details(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     tasks_list = tasklist.task_set.all().order_by('due_date')
     context = {'tasklist': tasklist,
-        'tasks_list': tasks_list,
-        'list_id': list_id}
+               'tasks_list': tasks_list,
+               'list_id': list_id}
     return render(request, 'tasks/details.html', context)
 
 
 @login_required
 def addTask(request, list_id):
-    tasklist, created = TaskList.objects.get_or_create(pk=list_id)
+    tasklist = get_object_or_404(TaskList, pk=list_id)
     if request.method == 'POST':
-        task = Task(task_list=tasklist)
-        form = TaskForm(request.POST, instance=task)
+        form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/tasklists/' + list_id + '/')
-    else:
-        task = Task(task_list=tasklist)
-        form = TaskForm(instance=task)
+            #form.save()
+            task = Task(tasklist=tasklist,
+                        title=form.cleaned_data['title'],
+                        description=form.cleaned_data['description'],
+                        due_date=form.cleaned_data['due_date'],
+                        category=form.cleaned_data['category'])
+            task.save()
+            return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
     return render(request, 'tasks/addTask.html', {'form': form})
 
 
 @login_required
 def edit(request, task_id):
-	task = get_object_or_404(Task, pk=task_id)
-	if request.method == 'POST':
-		form = TaskForm(request.POST, instance=task)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/tasklists/' + str(task.task_list.id) + '/')
-	else:
-		form = TaskForm(instance=task)
-	return render(request, 'tasks/edit.html', {'tasklist': task.task_list, 'form': form})
+    task = get_object_or_404(Task, pk=task_id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            #form.save()
+            task.title = form.cleaned_data['title']
+            task.description = form.cleaned_data['description']
+            task.category = form.cleaned_data['category']
+            task.due_date = form.cleaned_data['due_date']
+            task.save()
+            return HttpResponseRedirect(
+                '/tasklists/{0}/'.format(task.tasklist.id))
+    else:
+        form = TaskForm(instance=task)
+    return render(request,
+                  'tasks/edit.html',
+                  {'tasklist': task.tasklist, 'form': form})
 
 
 @login_required
@@ -69,10 +80,9 @@ def save(request, list_id):
 @login_required
 def check_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    tasklist = task.task_list
     task.is_completed = not task.is_completed
     task.save()
-    return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))
+    return HttpResponseRedirect('/tasklists/{0}/'.format(task.tasklist.id))
 
 
 @login_required
@@ -85,6 +95,6 @@ def delete_list(request, list_id):
 @login_required
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    tasklist = task.task_list
+    id = task.tasklist.id
     task.delete()
-    return HttpResponseRedirect('/tasklists/{0}/'.format(tasklist.id))
+    return HttpResponseRedirect('/tasklists/{0}/'.format(id))
