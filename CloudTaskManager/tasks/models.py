@@ -10,8 +10,6 @@ LATE_STR = 'late'
 SOON_STR = 'due soon'
 TOMORROW_STR = 'due tomorrow'
 
-# class User(models.Model):
-
 
 class TaskList(models.Model):
     title = models.CharField(max_length=TITLE_LENGTH)

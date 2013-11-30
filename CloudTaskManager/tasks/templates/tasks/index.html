@@ -2,8 +2,8 @@
 
 {% block body %}
     <h1>My lists</h1>
-    {% if task_list_list %}
-        {% for tasklist in task_list_list %}
+    {% if tasklist_list %}
+        {% for tasklist in tasklist_list %}
             <div class="list_div">
                 <div class="list_header">
                     <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>

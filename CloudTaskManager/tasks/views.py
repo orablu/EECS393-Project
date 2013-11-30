@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
-    context = {'task_list_list': TaskList.objects.order_by('title')}
+    context = {'tasklist_list': TaskList.objects.order_by('title')}
     return render(request, 'tasks/index.html', context)
 
 
@@ -37,6 +37,9 @@ def addTask(request, list_id):
                         #category=form.cleaned_data['category'])
             #task.save()
             return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
+    else:
+        task = Task(tasklist=tasklist)
+        form = TaskForm(instance=task)
     return render(request, 'tasks/addTask.html', {'form': form})
 
 
@@ -52,8 +55,8 @@ def edit(request, task_id):
             #task.category = form.cleaned_data['category']
             #task.due_date = form.cleaned_data['due_date']
             #task.save()
-            return HttpResponseRedirect(
-                '/tasklists/{0}/'.format(task.tasklist.id))
+            list_id = task.tasklist.id
+            return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
     else:
         form = TaskForm(instance=task)
     return render(request,

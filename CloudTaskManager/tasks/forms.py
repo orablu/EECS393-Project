@@ -14,7 +14,7 @@ from tasks.models import Task, TaskList
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'due_date', 'task_list']
+        fields = ['title', 'description', 'due_date', 'tasklist']
 
 
 class ListForm(ModelForm):
