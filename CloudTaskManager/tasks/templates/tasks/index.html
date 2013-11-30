@@ -1,7 +1,8 @@
 {% extends "tasks/base.html" %}
 
+{% block title %}My Lists{% endblock %}
+
 {% block body %}
-    <h1>My lists</h1>
     {% if tasklist_list %}
         {% for tasklist in tasklist_list %}
             <div class="list_div">
@@ -17,7 +18,7 @@
     {% else %}
         <div class="list_header">You have no task lists!</div>
     {% endif %}
-    <form class="add_button" action = "addList/">
+    <form class="add" action = "addList/">
         <button type = "submit">Add List</button>
     </form>
 {% endblock %}

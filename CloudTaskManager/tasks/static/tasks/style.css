@@ -2,10 +2,14 @@
  * Site-wide styles
  */
 
+body {
+    background-color: #eee;
+}
+
 .base_head {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 0px;
+    top: 0px;
     height: 30px;
     width: 100%;
     background-color: #1e8cbe;
@@ -16,7 +20,6 @@
     color: lightgrey;
     vertical-align: center;
     float: center;
-    /*display: inline-block;*/
 }
 
 .base_head .home_link {
@@ -37,12 +40,9 @@
 }
 
 .base_body {
+    padding-top: 30px;
     height: 100%;
     width: 100%;
-    background-color: #eee;
-    position: absolute;
-    left: 0px;
-    top: 30px;
     vertical-align: top;
 }
 
@@ -84,8 +84,21 @@ h1 {
     margin-bottom: 10px;
 }
 
+.delete {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/delete.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.add {
+    margin-top: 10px;
+}
+
 /*
- * List index
+ * Index
  */
 
 .list_div {
@@ -100,29 +113,72 @@ h1 {
 
 }
 
-.delete_link {
-
-}
-
-.add_button {
-    
-    margin-top: 10px;
-}
-
 /*
  * List details
  */
 
+.details_summary {
+
+}
+
+.details_description {
+
+}
+
+.details_category {
+
+}
+
+.details_list {
+
+}
+
+.details_task {
+
+}
+
 .details_task .statusTrue {
-    color: green;
-    background-image:url("images/checked.png");
-    padding-left: 5px;
-    padding-right: 5px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/checked.png");
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .details_task .statusFalse {
-    color: red;
-    background-image:url("images/unchecked.png");
-    padding-left: 5px;
-    padding-right: 5px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/unchecked.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.details_task_late {
+
+}
+
+.details_title {
+
+}
+
+.details_taskdesc {
+
+}
+
+.details_due {
+
+}
+
+.details_upcoming {
+
+}
+
+.details_delete {
+
+}
+
+.details_edit {
+
 }
