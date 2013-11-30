@@ -7,11 +7,15 @@
         {% for tasklist in tasklist_list %}
             <div class="list_div">
                 <div class="list_header">
-                    <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
-                    <a class="delete_link" href="{% url 'tasks:delete_list' tasklist.id %}">x</a>
+                    <div class="list_title">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
+                    </div>
+                    <div class="list_description">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                    </div>
                 </div>
-                <div class="list_description">
-                    <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                <div class="list_delete">
+                    <a href="{% url 'tasks:delete_list' tasklist.id %}"><span class="delete">&nbsp;</span></a>
                 </div>
             </div>
         {% endfor %}

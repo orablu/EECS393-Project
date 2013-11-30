@@ -14,6 +14,7 @@ body {
     width: 100%;
     background-color: #1e8cbe;
     text-align: center;
+    color: lightgrey;
 }
 
 .base_head a {
@@ -50,7 +51,6 @@ body {
     color: black;
     vertical-align: center;
     float: center;
-    /*display: inline-block;*/
 }
 
 .base_body .base_wrapper {
@@ -59,22 +59,27 @@ body {
 
 a:link {
     text-decoration: none;
+    color: inherit;
 }
 
 a:visited {
     text-decoration: none;
+    color: inherit;
 }
 
 a:hover {
     text-decoration: none;
+    color: inherit;
 }
 
 a:focus {
     text-decoration: none;
+    color: inherit;
 }
 
 a:active {
     text-decoration: none;
+    color: inherit;
 }
 
 h1 {
@@ -102,15 +107,26 @@ h1 {
  */
 
 .list_div {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .list_header {
+    display: inline-block;
+}
+
+.list_title {
     font-size: 150%;
 }
 
 .list_description {
+    color: #888;
+}
 
+.list_delete {
+    margin-bottom: auto;
+    margin-top: 5px;
+    display: inline-block;
+    float: right;
 }
 
 /*
@@ -118,15 +134,15 @@ h1 {
  */
 
 .details_summary {
-
+    color: #888;
 }
 
 .details_description {
-
+    font-size: 150%;
 }
 
 .details_category {
-
+    margin-bottom: 10px;
 }
 
 .details_list {
@@ -134,7 +150,14 @@ h1 {
 }
 
 .details_task {
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
 
+.details_task_late {
+    color: red;
+    margin-left: 5px;
+    margin-bottom: 10px;
 }
 
 .details_task .statusTrue {
@@ -155,24 +178,29 @@ h1 {
     background-position: center center;
 }
 
-.details_task_late {
-
+.details_tasksumm {
+    margin-bottom: 5px;
+    display: inline-block;
 }
 
 .details_title {
-
-}
-
-.details_taskdesc {
-
+    display: inline-block;
+    font-size: 125%;
 }
 
 .details_due {
-
+    margin-left: 25px;
 }
 
-.details_upcoming {
+.details_taskdesc {
+    margin-left: 25px;
+    color: #888;
+}
 
+.details_modify {
+    display: inline-block;
+    float: right;
+    color: #aaa;
 }
 
 .details_delete {
