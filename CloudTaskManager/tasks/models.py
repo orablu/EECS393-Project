@@ -1,7 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
-#from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import User as AuthUser
 
 TITLE_LENGTH = 50
 DESCR_LENGTH = 300
@@ -60,17 +60,17 @@ class Task(models.Model):
         return '{0}: {1}'.format(self.title, self.description)
 
 
-#class User(models.Model):
-    #authuser = models.ForeignKey(AuthUser)
-    #owned = models.ManyToManyField(TaskList, related_name='xw+')
-    #shared = models.ManyToManyField(TaskList, related_name='rw+')
-    #readonly = models.ManyToManyField(TaskList, related_name='ro+')
+class User(models.Model):
+    authuser = models.OneToOneField(AuthUser)
+    owned = models.ManyToManyField(TaskList, related_name='xw+')
+    shared = models.ManyToManyField(TaskList, related_name='rw+')
+    readonly = models.ManyToManyField(TaskList, related_name='ro+')
 
-    #def get_username(self):
-        #return self.authuser.get_username()
+    def get_username(self):
+        return self.authuser.get_username()
 
-    #def get_firstname(self):
-        #return self.authuser.first_name
+    def get_firstname(self):
+        return self.authuser.first_name
 
-    #def get_name(self):
-        #return self.authuser.get_full_name()
+    def get_name(self):
+        return self.authuser.get_full_name()

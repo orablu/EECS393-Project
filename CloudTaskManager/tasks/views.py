@@ -7,7 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
-    context = {'tasklist_list': TaskList.objects.order_by('title')}
+    user = request.user.user
+    context = {'owned': user.owned.all().order_by('title'),
+               'shared': user.shared.all().order_by('title'),
+               'shared': user.shared.all().order_by('title')}
     return render(request, 'tasks/index.html', context)
 
 
@@ -71,6 +74,8 @@ def addList(request):
         form = ListForm(request.POST, instance=tasklist)
         if form.is_valid():
             form.save()
+            user = request.user.user
+            user.owned.add(tasklist)
             return HttpResponseRedirect('/tasklists/')
     else:
         form = ListForm()
