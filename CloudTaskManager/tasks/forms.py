@@ -20,4 +20,4 @@ class TaskForm(ModelForm):
 class ListForm(ModelForm):
     class Meta:
         model = TaskList
-        fields = ['title', 'description', 'category']
+        fields = ['title', 'description', 'category', 'readonly_can_check']

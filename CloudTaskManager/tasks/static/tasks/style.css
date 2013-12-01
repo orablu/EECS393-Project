@@ -112,6 +112,7 @@ h1 {
 
 .list_header {
     display: inline-block;
+    width: 80%;
 }
 
 .list_title {
@@ -182,6 +183,7 @@ h1 {
 .details_tasksumm {
     margin-bottom: 5px;
     display: inline-block;
+    width: 80%;
 }
 
 .details_title {
@@ -195,6 +197,9 @@ h1 {
 
 .details_taskdesc {
     margin-left: 25px;
+}
+
+.details_task .details_taskdesc {
     color: #888;
 }
 
@@ -210,4 +215,54 @@ h1 {
 
 .details_edit {
 
+}
+
+/*
+ * Form editing
+ */
+
+.form_div {
+    margin-bottom: 25px;
+}
+
+.form_div_hidden {
+    visibility: hidden;
+    position: absolute;
+    top: -100px;
+    left: 0px;
+}
+
+.form_label {
+    font-size: 150%;
+    display: inline-block;
+}
+
+.form_error {
+    font-size: 150%;
+    margin-left: 15px;
+    display: inline-block;
+    color: red;
+}
+
+.form_input {
+    display: block;
+}
+
+.form_input input, textarea, select {
+    width: 100%;
+    font-size: 150%;
+    background-color: #f2f2f2;
+    color: #888;
+    border: none;
+    border-bottom: thin solid darkgrey;
+}
+
+.save {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.errorlist {
+    color: red;
 }

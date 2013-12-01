@@ -10,11 +10,15 @@ LATE_STR = 'late'
 SOON_STR = 'due soon'
 TOMORROW_STR = 'due tomorrow'
 OK_STR = 'ok'
+READONLY_STR = 'Shared people can complete tasks?'
+DUE_STR = 'Due'
+COMPLETED_STR = 'Completed?'
 
 
 class TaskList(models.Model):
     title = models.CharField(max_length=TITLE_LENGTH)
     category = models.CharField(max_length=CATEG_LENGTH)
+    readonly_can_check = models.BooleanField(READONLY_STR, default=False)
     description = models.CharField(max_length=DESCR_LENGTH,
                                    null=True,
                                    blank=True)
@@ -28,8 +32,8 @@ class Task(models.Model):
     title = models.CharField(max_length=TITLE_LENGTH)
     #order = models.IntegerField(default=0) # TODO: Add
     category = models.CharField(max_length=CATEG_LENGTH)
-    due_date = models.DateTimeField('Due', null=True, blank=True)
-    is_completed = models.BooleanField('Completed?', default=False)
+    due_date = models.DateTimeField(DUE_STR, null=True, blank=True)
+    is_completed = models.BooleanField(COMPLETED_STR, default=False)
     description = models.CharField(max_length=DESCR_LENGTH,
                                    null=True,
                                    blank=True)

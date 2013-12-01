@@ -8,8 +8,8 @@
   </head>
   <body>
     <div class="base_head">
-        <a class="home_link" href="{% url 'tasks:index' %}">Home</a>
-        <a class="logout_link" href="{% url 'logout' %}">Log out</a>
+        <a class="home_link" href="{% url 'tasks:index' %}">{{ name }}</a>
+        <a class="logout_link" href="{% url 'logout' %}">log out</a>
         <div class="extra_links">
             {% block links %}{% endblock %}
         </div>
