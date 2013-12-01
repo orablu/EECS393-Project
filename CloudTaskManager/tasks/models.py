@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User as AuthUser
 
-TITLE_LENGTH = 50
+TITLE_LENGTH = 25
 DESCR_LENGTH = 300
 CATEG_LENGTH = 20
 LATE_STR = 'late'

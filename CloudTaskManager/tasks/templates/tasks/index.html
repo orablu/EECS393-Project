@@ -8,7 +8,7 @@
 
 {% block body %}
     {% if owned %}
-        <h1>Owned</h1>
+        {% if shared or readonly %}<h1>Owned</h1>{% endif %}
         {% for tasklist in owned %}
             <div class="list_div">
                 <div class="list_header">
