@@ -3,7 +3,7 @@
  */
 
 body {
-    background-color: #eee;
+    background-color: #f2f2f2;
 }
 
 .base_head {
@@ -135,6 +135,7 @@ h1 {
 
 .details_summary {
     color: #888;
+    margin-bottom: 35px;
 }
 
 .details_description {
@@ -160,7 +161,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.details_task .statusTrue {
+.statusTrue {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -169,7 +170,7 @@ h1 {
     background-position: center center;
 }
 
-.details_task .statusFalse {
+.statusFalse {
     display: inline-block;
     width: 20px;
     height: 20px;

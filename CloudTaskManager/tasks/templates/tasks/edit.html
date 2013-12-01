@@ -4,6 +4,8 @@
     <a href="{% url 'tasks:details' tasklist.id %}">Back to {{ tasklist.title }}</a>
 {% endblock %}
 
+{% block title %}Edit Task{% endblock %}
+
 {% block body %}
     <form method="post">
         {%csrf_token%}

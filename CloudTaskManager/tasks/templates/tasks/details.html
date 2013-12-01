@@ -1,5 +1,9 @@
 {% extends "tasks/base.html" %}
 
+{% block links %}
+    <a class="add" title="Create a new task" href="{% url 'tasks:addTask' tasklist.id %}">+</a>
+{% endblock %}
+
 {% block title %}{{ tasklist.title }}{% endblock %}
 
 {% block body %}
@@ -9,7 +13,7 @@
     </div>
 	<div class="details_list">
         {% for task in tasks_list %}
-        <div class="details_task{% if task.is_late %}_late{% endif %}">
+        <div class="details_task{% if task.is_late and not task.is_completed %}_late{% endif %}">
             <div class="details_tasksumm">
                 <a href="{% url 'tasks:check_task' task.id %}"><span class="status{{ task.is_completed }}">&nbsp;</span></a>
                 <div class="details_title">{{ task.title }}</div>
@@ -23,5 +27,4 @@
         </div>
         {% endfor %}
 	</div>
-    <form action="addTask/"><button class="add" type="submit">Add Task</button></form>
 {% endblock %}

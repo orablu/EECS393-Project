@@ -1,8 +1,12 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task
 from tasks.forms import TaskForm, ListForm
 from django.contrib.auth.decorators import login_required
+
+
+def check_user_or_500(user, tasklist):
+    return True # TODO: Implement
 
 
 @login_required
@@ -10,15 +14,17 @@ def index(request):
     user = request.user.user
     context = {'owned': user.owned.all().order_by('title'),
                'shared': user.shared.all().order_by('title'),
-               'shared': user.shared.all().order_by('title')}
+               'readonly': user.readonly.all().order_by('title')}
     return render(request, 'tasks/index.html', context)
 
 
 @login_required
 def details(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
+    can_edit = check_user_or_500(request.user.user, tasklist)
     tasks_list = tasklist.task_set.all().order_by('due_date')
-    context = {'tasklist': tasklist,
+    context = {'can_edit': can_edit,
+               'tasklist': tasklist,
                'tasks_list': tasks_list,
                'list_id': list_id}
     return render(request, 'tasks/details.html', context)
@@ -27,6 +33,8 @@ def details(request, list_id):
 @login_required
 def addTask(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
+    if not check_user_or_500(request.user.user, tasklist):
+        return HttpResponseRedirect('/tasklists/{0}/'.format(list_id))
     if request.method == 'POST':
         #form = TaskForm(request.POST)
         task = Task(tasklist=tasklist)
@@ -43,12 +51,14 @@ def addTask(request, list_id):
     else:
         task = Task(tasklist=tasklist)
         form = TaskForm(instance=task)
-    return render(request, 'tasks/addTask.html', {'form': form})
+    return render(request, 'tasks/addTask.html', {'tasklist': tasklist, 'form': form})
 
 
 @login_required
 def edit(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+    if not check_user_or_500(request.user.user, task.tasklist):
+        return HttpResponseRedirect('/tasklists/{0}/'.format(task.tasklist.id))
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
@@ -82,9 +92,9 @@ def addList(request):
     return render(request, 'tasks/addList.html', {'form': form})
 
 
-@login_required
-def save(request, list_id):
-    return HttpResponse("Saved! (not actually though)")
+#@login_required
+#def save(request, list_id):
+    #return HttpResponse("Saved! (not actually though)")
 
 
 @login_required
@@ -99,6 +109,8 @@ def check_task(request, task_id):
 @login_required
 def delete_list(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
+    if not check_user_or_500(request.user.user, tasklist):
+        return HttpResponseRedirect('/tasklists/')
     tasklist.delete()
     return HttpResponseRedirect('/tasklists/')
 
@@ -107,5 +119,7 @@ def delete_list(request, list_id):
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     id = task.tasklist.id
+    if not check_user_or_500(request.user.user, task.tasklist):
+        return HttpResponseRedirect('/tasklists/{0}/'.format(task.tasklist.id))
     task.delete()
     return HttpResponseRedirect('/tasklists/{0}/'.format(id))

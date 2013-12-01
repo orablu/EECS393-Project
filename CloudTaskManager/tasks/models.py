@@ -9,6 +9,7 @@ CATEG_LENGTH = 20
 LATE_STR = 'late'
 SOON_STR = 'due soon'
 TOMORROW_STR = 'due tomorrow'
+OK_STR = 'ok'
 
 
 class TaskList(models.Model):
@@ -53,6 +54,7 @@ class Task(models.Model):
             return TOMORROW_STR
         if self.is_due_this_week():
             return SOON_STR
+        return OK_STR
     status.admin_order_field = 'due_date'
     status.short_description = 'Status'
 

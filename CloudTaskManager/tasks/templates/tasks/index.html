@@ -1,9 +1,12 @@
 {% extends "tasks/base.html" %}
 
+{% block links %}
+    <a class="add" title="Create a new task list" href="{% url 'tasks:addList' %}">+</a>
+{% endblock %}
+
 {% block title %}My Lists{% endblock %}
 
 {% block body %}
-    <form class="add" action = "addList/"><button type = "submit">Add List</button></form>
     {% if owned %}
         <h1>Owned</h1>
         {% for tasklist in owned %}
