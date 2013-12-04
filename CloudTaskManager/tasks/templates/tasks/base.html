@@ -10,7 +10,9 @@
   <body>
     <div class="base_head">
         <a class="home_link" href="{% url 'tasks:index' %}"><strong>task</strong>book</a>
-        <a class="logout_link" href="{% url 'logout' %}">log out</a>
+        <a class="logout_link" href="{% url 'logout' %}">
+            {% if logged_in %}log out{% else %}log in{% endif %}
+        </a>
         <div class="extra_links">
             {% block links %}{% endblock %}
         </div>

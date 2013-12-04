@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
-from tasks.models import TaskList, Task
-from tasks.forms import TaskForm, ListForm
+from tasks.models import TaskList, Task, User
+from tasks.forms import TaskForm, ListForm, UserForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User as AuthUser
 
 
 def user_can_write(user, tasklist):
@@ -17,6 +18,30 @@ def user_can_write(user, tasklist):
         raise Http404
 
 
+def register(request):
+    passwords_match = True
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            confirm = form.cleaned_data['confirm']
+            passwords_match = password == confirm
+            if passwords_match:
+                authuser = AuthUser.objects.create_user(username,
+                                                        email,
+                                                        password)
+                user = User(authuser=authuser)
+                user.save()
+                return HttpResponseRedirect(reverse('tasks:index'))
+    else:
+        form = UserForm()
+    context = {'form': form, 'error': passwords_match}
+    context['logged_in'] = request.user and request.user.is_authenticated()
+    return render(request, 'tasks/register.html', context)
+
+
 @login_required
 def index(request):
     user = request.user.user
@@ -24,6 +49,7 @@ def index(request):
                'owned': user.owned.all().order_by('title'),
                'shared': user.shared.all().order_by('title'),
                'readonly': user.readonly.all().order_by('title')}
+    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/index.html', context)
 
 
@@ -37,57 +63,24 @@ def details(request, list_id):
                'tasklist': tasklist,
                'tasks_list': tasks_list,
                'list_id': list_id}
+    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/details.html', context)
-
-
-@login_required
-def add_task(request, list_id):
-    tasklist = get_object_or_404(TaskList, pk=list_id)
-    if not user_can_write(request.user.user, tasklist):
-        return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
-    if request.method == 'POST':
-        task = Task(tasklist=tasklist)
-        form = TaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
-    else:
-        task = Task(tasklist=tasklist)
-        form = TaskForm(instance=task)
-    context = {'name': request.user.get_username(),
-               'tasklist': tasklist,
-               'new': True,
-               'form': form}
-    return render(request, 'tasks/task.html', context)
-
-
-@login_required
-def edit_task(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    list_id = task.tasklist.id
-    if not user_can_write(request.user.user, task.tasklist):
-        return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
-    if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
-    else:
-        form = TaskForm(instance=task)
-    context = {'name': request.user.get_username(),
-               'tasklist': task.tasklist,
-               'new': False,
-               'form': form}
-    return render(request, 'tasks/task.html', context)
 
 
 @login_required
 def add_list(request):
     if request.method == 'POST':
-        tasklist = TaskList()
-        form = ListForm(request.POST, instance=tasklist)
+        form = ListForm(request.POST)
         if form.is_valid():
-            form.save()
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            category = form.cleaned_data['category']
+            readonly = form.cleaned_data['readonly']
+            tasklist = TaskList(title=title,
+                                description=description,
+                                category=category,
+                                readonly_can_check=readonly)
+            tasklist.save()
             user = request.user.user
             user.owned.add(tasklist)
             return HttpResponseRedirect(reverse('tasks:index'))
@@ -96,24 +89,87 @@ def add_list(request):
     context = {'name': request.user.get_username(),
                'new': True,
                'form': form}
+    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/list.html', context)
 
 
+@login_required
 def edit_list(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     if not user_can_write(request.user.user, tasklist):
-        return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
+        return HttpResponseRedirect(reverse('tasks:details',
+                                    kwargs={'list_id': list_id}))
     if request.method == 'POST':
-        form = ListForm(request.POST, instance=tasklist)
+        form = ListForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('tasks:index'))
+            tasklist.title = form.cleaned_data['title']
+            tasklist.description = form.cleaned_data['description']
+            tasklist.category = form.cleaned_data['category']
+            tasklist.readonly_can_check = form.cleaned_data['readonly']
+            tasklist.save()
+            return HttpResponseRedirect(reverse('tasks:details',
+                                        kwargs={'list_id': tasklist.id}))
     else:
-        form = ListForm(instance=tasklist)
+        form = ListForm()
     context = {'name': request.user.get_username(),
                'new': False,
                'form': form}
+    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/list.html', context)
+
+
+@login_required
+def add_task(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    if not user_can_write(request.user.user, tasklist):
+        return HttpResponseRedirect(reverse('tasks:details',
+                                    kwargs={'list_id': list_id}))
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = Task(tasklist=tasklist,
+                        title=form.cleaned_data['title'],
+                        description=form.cleaned_data['description'],
+                        category=form.cleaned_data['category'],
+                        due_date=form.cleaned_data['due_date'])
+            task.save()
+            return HttpResponseRedirect(reverse('tasks:details',
+                                        kwargs={'list_id': list_id}))
+    else:
+        form = TaskForm()
+    context = {'name': request.user.get_username(),
+               'tasklist': tasklist,
+               'new': True,
+               'form': form}
+    context['logged_in'] = request.user and request.user.is_authenticated()
+    return render(request, 'tasks/task.html', context)
+
+
+@login_required
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    list_id = task.tasklist.id
+    if not user_can_write(request.user.user, task.tasklist):
+        return HttpResponseRedirect(reverse('tasks:details',
+                                    kwargs={'list_id': list_id}))
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task.title = form.cleaned_data['title']
+            task.description = form.cleaned_data['description']
+            task.category = form.cleaned_data['category']
+            task.due_date = form.cleaned_data['due_date']
+            task.save()
+            return HttpResponseRedirect(reverse('tasks:details',
+                                        kwargs={'list_id': list_id}))
+    else:
+        form = TaskForm()
+    context = {'name': request.user.get_username(),
+               'tasklist': task.tasklist,
+               'new': False,
+               'form': form}
+    context['logged_in'] = request.user and request.user.is_authenticated()
+    return render(request, 'tasks/task.html', context)
 
 
 @login_required
@@ -122,10 +178,12 @@ def check_task(request, task_id):
     id = task.tasklist.id
     if not user_can_write(request.user.user, task.tasklist):
         if not task.tasklist.readonly_can_check:
-            return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': id}))
+            return HttpResponseRedirect(reverse('tasks:details',
+                                        kwargs={'list_id': id}))
     task.is_completed = not task.is_completed
     task.save()
-    return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': id}))
+    return HttpResponseRedirect(reverse('tasks:details',
+                                kwargs={'list_id': id}))
 
 
 @login_required
@@ -148,6 +206,8 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     id = task.tasklist.id
     if not user_can_write(request.user.user, task.tasklist):
-        return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': id}))
+        return HttpResponseRedirect(reverse('tasks:details',
+                                    kwargs={'list_id': id}))
     task.delete()
-    return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': id}))
+    return HttpResponseRedirect(reverse('tasks:details',
+                                kwargs={'list_id': id}))
