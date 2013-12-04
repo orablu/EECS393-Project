@@ -39,7 +39,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         tasklist.save()
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -61,7 +61,7 @@ class TaskListMethodTests(TestCase):
         tasklist = TaskList(title=self.TASKLIST_TITLE,
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -77,7 +77,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() + datetime.timedelta(days=2)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -92,7 +92,7 @@ class TaskListMethodTests(TestCase):
         tasklist = TaskList(title=self.TASKLIST_TITLE,
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -108,7 +108,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() - datetime.timedelta(days=1)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -123,7 +123,7 @@ class TaskListMethodTests(TestCase):
         tasklist = TaskList(title=self.TASKLIST_TITLE,
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -139,7 +139,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() + datetime.timedelta(days=1)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -152,20 +152,20 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() + datetime.timedelta(days=15)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
                     due_date=new_due_date,
                     is_completed=False)
-        self.assertEqual(task.status(), None)
+        self.assertEqual(task.status(), 'ok')
 
     def test_status_late(self):
         tasklist = TaskList(title=self.TASKLIST_TITLE,
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() - datetime.timedelta(days=15)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -178,7 +178,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() + datetime.timedelta(days=4)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,
@@ -191,7 +191,7 @@ class TaskListMethodTests(TestCase):
                             description=self.TASKLIST_DESCR,
                             category=self.TASKLIST_CATEG)
         new_due_date = timezone.now() + datetime.timedelta(days=1)
-        task = Task(task_list=tasklist,
+        task = Task(tasklist=tasklist,
                     title=self.TASK_TITLE,
                     description=self.TASK_DESCR,
                     category=self.TASK_CATEGORY,

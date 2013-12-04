@@ -1,10 +1,10 @@
 {% extends "tasks/base.html" %}
 
 {% block links %}
-    <a href="{% url 'tasks:details' tasklist.id %}">Back to {{ tasklist.title }}</a>
+    <a href="{% url 'tasks:details' tasklist.id %}">back to {{ tasklist.title }}</a>
 {% endblock %}
 
-{% block title %}Add a Task{% endblock %}
+{% block title %}{% if new %}add a task{% else %}edit task{% endif %}{% endblock %}
 
 {% block body %}
     <form method="post">

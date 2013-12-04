@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task
@@ -14,8 +14,7 @@ def user_can_write(user, tasklist):
     elif tasklist in user.readonly.all():
         return False
     else:
-        # TODO: Navigate to an HTTP 500 page instead, like get_object_or_404
-        return False
+        raise Http404
 
 
 @login_required
@@ -42,7 +41,7 @@ def details(request, list_id):
 
 
 @login_required
-def addTask(request, list_id):
+def add_task(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     if not user_can_write(request.user.user, tasklist):
         return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
@@ -57,12 +56,13 @@ def addTask(request, list_id):
         form = TaskForm(instance=task)
     context = {'name': request.user.get_username(),
                'tasklist': tasklist,
+               'new': True,
                'form': form}
-    return render(request, 'tasks/addTask.html', context)
+    return render(request, 'tasks/task.html', context)
 
 
 @login_required
-def edit(request, task_id):
+def edit_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     list_id = task.tasklist.id
     if not user_can_write(request.user.user, task.tasklist):
@@ -76,12 +76,13 @@ def edit(request, task_id):
         form = TaskForm(instance=task)
     context = {'name': request.user.get_username(),
                'tasklist': task.tasklist,
+               'new': False,
                'form': form}
-    return render(request, 'tasks/edit.html', context)
+    return render(request, 'tasks/task.html', context)
 
 
 @login_required
-def addList(request):
+def add_list(request):
     if request.method == 'POST':
         tasklist = TaskList()
         form = ListForm(request.POST, instance=tasklist)
@@ -92,8 +93,27 @@ def addList(request):
             return HttpResponseRedirect(reverse('tasks:index'))
     else:
         form = ListForm()
-    context = {'name': request.user.get_username(), 'form': form}
-    return render(request, 'tasks/addList.html', context)
+    context = {'name': request.user.get_username(),
+               'new': True,
+               'form': form}
+    return render(request, 'tasks/list.html', context)
+
+
+def edit_list(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    if not user_can_write(request.user.user, tasklist):
+        return HttpResponseRedirect(reverse('tasks:details', kwargs={'list_id': list_id}))
+    if request.method == 'POST':
+        form = ListForm(request.POST, instance=tasklist)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('tasks:index'))
+    else:
+        form = ListForm(instance=tasklist)
+    context = {'name': request.user.get_username(),
+               'new': False,
+               'form': form}
+    return render(request, 'tasks/list.html', context)
 
 
 @login_required

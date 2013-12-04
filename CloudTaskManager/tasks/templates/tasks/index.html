@@ -1,10 +1,10 @@
 {% extends "tasks/base.html" %}
 
 {% block links %}
-    <a class="add" title="Create a new task list" href="{% url 'tasks:addList' %}">+</a>
+    <a class="add" title="Create a new task list" href="{% url 'tasks:add_list' %}">+</a>
 {% endblock %}
 
-{% block title %}My Lists{% endblock %}
+{% block title %}my lists{% endblock %}
 
 {% block body %}
     {% if owned %}

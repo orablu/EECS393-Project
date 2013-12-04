@@ -3,6 +3,7 @@
  */
 
 body {
+    font-family: sans-serif;
     background-color: #f2f2f2;
 }
 
@@ -102,6 +103,50 @@ h1 {
     margin-top: 10px;
 }
 
+
+/*
+ * Authentication
+ */
+
+.login {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.login_error {
+    color: red;
+    font-size: 80%;
+    text-align: center;
+}
+
+.login_div {
+    width: 100%;
+    margin-top: 35px;
+    text-align: center;
+}
+
+.login_label {
+    width: 100%;
+    font-size: 150%;
+    color: #888;
+}
+
+.login_input {
+    width: 100%;
+}
+
+.login_input input, textarea, select {
+    width: 100%;
+    font-size: 150%;
+    background-color: #f2f2f2;
+    color: #888;
+    border: none;
+    border-bottom: thin solid darkgrey;
+    text-align: center;
+}
+
+
 /*
  * Index
  */
@@ -130,6 +175,7 @@ h1 {
     float: right;
 }
 
+
 /*
  * List details
  */
@@ -137,6 +183,8 @@ h1 {
 .details_summary {
     color: #888;
     margin-bottom: 35px;
+    display: inline-block;
+    width: 80%;
 }
 
 .details_description {
@@ -145,6 +193,12 @@ h1 {
 
 .details_category {
     margin-bottom: 10px;
+}
+
+.details_editlist {
+    display: inline-block;
+    float: right;
+    color: #aaa;
 }
 
 .details_list {
@@ -216,6 +270,7 @@ h1 {
 .details_edit {
 
 }
+
 
 /*
  * Form editing

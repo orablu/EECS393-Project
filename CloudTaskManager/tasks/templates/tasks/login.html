@@ -1,0 +1,23 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}log in{% endblock %}
+
+
+{% block body %}
+    {% if form.errors %}
+        <div class="login_error">Your username and password didn't match. Please try again.</div>
+    {% endif %}
+    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <div class="login_div">
+            <div class="login_label">username</div>
+            <div class="login_input">{{ form.username }}</div>
+        </div>
+        <div class="login_div">
+            <div class="login_label">password</div>
+            <div class="login_input">{{ form.password }}</div>
+        </div>
+        <div class="login"><input type="submit" value="log in" /></div>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "tasks/base.html" %}
 
 {% block links %}
-    <a class="add" title="Create a new task" href="{% url 'tasks:addTask' tasklist.id %}">+</a>
+    <a class="add" title="Create a new task" href="{% url 'tasks:add_task' tasklist.id %}">+</a>
 {% endblock %}
 
 {% block title %}{{ tasklist.title }}{% endblock %}
@@ -11,6 +11,7 @@
         <div class="details_description">{{ tasklist.description }}</div>
         <div class="details_category">Category: {{ tasklist.category }}</div>
     </div>
+    <div class="details_editlist"><a class="details_edit" href="{% url 'tasks:edit_list' tasklist.id %}">edit</a></div>
 	<div class="details_list">
         {% for task in tasks_list %}
         <div class="details_task{% if task.is_late and not task.is_completed %}_late{% endif %}">
@@ -21,7 +22,7 @@
                 {% if task.description %}<div class="details_taskdesc">{{ task.description }}</div>{% endif %}
             </div>
             <div class="details_modify">
-                <a class="details_edit" href="{% url 'tasks:edit' task.id %}">edit</a>
+                <a class="details_edit" href="{% url 'tasks:edit_task' task.id %}">edit</a>
                 <a class="details_delete" href="{% url 'tasks:delete_task' task.id %}"><span class="delete">&nbsp;</span></a>
             </div>
         </div>
