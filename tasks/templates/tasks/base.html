@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}" />
+    <title>taskbook{% block pagetitle %}{% endblock %}</title>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <div class="base_head">
+        <a class="home_link" href="{% url 'tasks:index' %}"><strong>task</strong>book</a>
+        <a class="logout_link" href="{% url 'logout' %}">
+            {% if logged_in %}log out{% else %}log in{% endif %}
+        </a>
+        <div class="extra_links">
+            {% block links %}{% endblock %}
+        </div>
+    </div>
+    <div class="base_body">
+        <div class="base_wrapper">
+            <h1>{% block title %}{% endblock %}</h1>
+            <hr />
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+  </body>
+</html>

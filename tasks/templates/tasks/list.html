@@ -1,0 +1,21 @@
+{% extends "tasks/base.html" %}
+
+{% block links %}
+    <a href="{% url 'tasks:index' %}">Back to my lists</a>
+{% endblock %}
+
+{% block title %}add a list{% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form_div">
+                <div class="form_label">{{ field.label_tag }}</div>
+                <div class="form_error">{{ field.errors.0 }}</div>
+                <div class="form_input">{{ field }}</div>
+            </div>
+        {% endfor %}
+        <div class="save"><input type="submit" value="Save List" /></div>
+    </form>
+{% endblock %}

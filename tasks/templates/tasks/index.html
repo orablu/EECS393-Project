@@ -1,0 +1,64 @@
+{% extends "tasks/base.html" %}
+
+{% block links %}
+    <a class="add" title="Create a new task list" href="{% url 'tasks:add_list' %}">+</a>
+{% endblock %}
+
+{% block title %}my lists{% endblock %}
+
+{% block body %}
+    {% if owned %}
+        {% if shared or readonly %}<h1>Owned</h1>{% endif %}
+        {% for tasklist in owned %}
+            <div class="list_div">
+                <div class="list_header">
+                    <div class="list_title">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
+                    </div>
+                    <div class="list_description">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                    </div>
+                </div>
+                <div class="list_delete">
+                    <a href="{% url 'tasks:delete_list' tasklist.id %}"><span class="delete">&nbsp;</span></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if shared %}
+        <h1>Contributing</h1>
+        {% for tasklist in shared %}
+            <div class="list_div">
+                <div class="list_header">
+                    <div class="list_title">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
+                    </div>
+                    <div class="list_description">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                    </div>
+                </div>
+                <div class="list_delete">
+                    <a href="{% url 'tasks:delete_list' tasklist.id %}"><span class="delete">&nbsp;</span></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if readonly %}
+        <h1>Shared with me</h1>
+        {% for tasklist in readonly %}
+            <div class="list_div">
+                <div class="list_header">
+                    <div class="list_title">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.title }}</a>
+                    </div>
+                    <div class="list_description">
+                        <a href="{% url 'tasks:details' tasklist.id %}">{{ tasklist.description }}</a>
+                    </div>
+                </div>
+                <div class="list_delete">
+                    <a href="{% url 'tasks:delete_list' tasklist.id %}"><span class="delete">&nbsp;</span></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
