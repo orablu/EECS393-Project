@@ -5,6 +5,9 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+handler403 = 'tasks.views.index'
+handler404 = 'tasks.views.index'
+
 urlpatterns = patterns('',
     url(r'^', include('tasks.urls', namespace='tasks')),
     url(r'^admin/', include(admin.site.urls), name='admin'),

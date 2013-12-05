@@ -1,0 +1,351 @@
+/*
+ * Site-wide styles
+ */
+
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+}
+
+.base_titlebar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 2em;
+    background-color: #1e8ebe;
+}
+
+.base_head {
+    margin-top: 0.1em;
+    width: 100%;
+    height: 2em;
+    text-align: center;
+    color: lightgrey;
+    font-size: 1.5em;
+}
+
+.base_head a {
+    color: lightgrey;
+    vertical-align: center;
+}
+
+.base_head .home_div {
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+}
+
+.base_head .home_link {
+}
+
+.base_head .logout_div {
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+}
+
+.base_head .logout_link {
+}
+
+.base_head .extra_links {
+    width: 30%;
+    display: inline-block;
+    float: center;
+}
+
+.base_body {
+    padding-top: 1em;
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+}
+
+.base_body a {
+    color: black;
+    vertical-align: center;
+    float: center;
+}
+
+.base_body .base_wrapper {
+    margin-left: 0.1em;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+    margin-left: 0em;
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+}
+
+.delete {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/delete.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.add {
+    margin-top: 0.3em;
+}
+
+
+/*
+ * Authentication
+ */
+
+.login {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.login_error {
+    color: red;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.login_div {
+    width: 100%;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.login_label {
+    width: 100%;
+    font-size: 1.5em;
+    color: #888;
+}
+
+.login_input {
+    width: 100%;
+}
+
+.login_input input, textarea, select {
+    width: 100%;
+    font-size: 1.5em;
+    background-color: #f2f2f2;
+    color: #888;
+    border: none;
+    border-bottom: thin solid darkgrey;
+    text-align: center;
+}
+
+.login_newdiv {
+    margin-top: 1em;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.login_newuser {
+}
+
+.login_register {
+    color: #888;
+}
+
+
+/*
+ * Index
+ */
+
+.list_div {
+    margin-bottom: 0.5em;
+}
+
+.list_header {
+    display: inline-block;
+    width: 80%;
+}
+
+.list_title {
+    font-size: 1.5em;
+}
+
+.list_description {
+    color: #888;
+}
+
+.list_delete {
+    margin-bottom: auto;
+    margin-top: 0.1em;
+    display: inline-block;
+    float: right;
+}
+
+
+/*
+ * List details
+ */
+
+.details_summary {
+    color: #888;
+    margin-bottom: 1em;
+    display: inline-block;
+    width: 80%;
+}
+
+.details_description {
+    font-size: 1.5em;
+}
+
+.details_category {
+    margin-bottom: 0.3em;
+}
+
+.details_editlist {
+    display: inline-block;
+    float: right;
+    color: #aaa;
+}
+
+.details_edit {
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.details_task {
+    font-size: 1em;
+    margin-left: 0.1em;
+    margin-bottom: 0.3em;
+}
+
+.details_task_late {
+    color: red;
+    margin-left: 0.1em;
+    margin-bottom: 0.3em;
+}
+
+.statusTrue {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/checked.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.statusFalse {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("images/unchecked.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.details_tasksumm {
+    margin-bottom: 0.1em;
+    display: inline-block;
+    width: 80%;
+}
+
+.details_title {
+    display: inline-block;
+    font-size: 1.25em;
+}
+
+.details_due {
+    margin-left: 1em;
+}
+
+.details_taskdesc {
+    margin-left: 1em;
+}
+
+.details_task .details_taskdesc {
+    color: #888;
+}
+
+.details_modify {
+    display: inline-block;
+    float: right;
+    color: #aaa;
+}
+
+.details_delete {
+}
+
+.details_edit {
+}
+
+
+/*
+ * Form editing
+ */
+
+.form_div {
+    margin-bottom: 1em;
+}
+
+.form_label {
+    font-size: 1.5em%;
+    display: inline-block;
+}
+
+.form_error {
+    font-size: 1.5em%;
+    margin-left: 0.5em;
+    display: inline-block;
+    color: red;
+}
+
+.form_input {
+    display: block;
+}
+
+.form_input input, textarea {
+    max-height: 2.5em;
+    max-width: 100%;
+    width: 100%;
+    font-size: 1.5em;
+    background-color: #f2f2f2;
+    color: #888;
+    border: none;
+    border-bottom: thin solid darkgrey;
+}
+
+.form_input select {
+    display: inline;
+    width: 32%;
+}
+
+.save {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.errorlist {
+    color: red;
+}

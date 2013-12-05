@@ -1,7 +1,7 @@
 # Django settings for CloudTaskManager project.
 
 DEBUG = False
-#TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -152,7 +152,7 @@ LOGGING = {
 # Heroku settings
 
 import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+#DATABASES['default'] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP-X_FORWARDED_PROTO', 'https')
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False

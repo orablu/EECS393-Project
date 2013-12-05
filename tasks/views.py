@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task, User
@@ -17,7 +18,7 @@ def user_can_write(user, tasklist):
     elif tasklist in user.readonly.all():
         return False
     else:
-        raise Http404
+        raise PermissionDenied
 
 
 def register(request):
