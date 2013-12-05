@@ -8,7 +8,7 @@
 
 {% block body %}
     {% if owned %}
-        {% if shared or readonly %}<h1>Owned</h1>{% endif %}
+        {% if shared or readonly %}<h1>owned</h1>{% endif %}
         {% for tasklist in owned %}
             <div class="list_div">
                 <div class="list_header">
@@ -26,7 +26,7 @@
         {% endfor %}
     {% endif %}
     {% if shared %}
-        <h1>Contributing</h1>
+        <h1>contributing</h1>
         {% for tasklist in shared %}
             <div class="list_div">
                 <div class="list_header">
@@ -44,7 +44,7 @@
         {% endfor %}
     {% endif %}
     {% if readonly %}
-        <h1>Shared with me</h1>
+        <h1>shared with me</h1>
         {% for tasklist in readonly %}
             <div class="list_div">
                 <div class="list_header">
