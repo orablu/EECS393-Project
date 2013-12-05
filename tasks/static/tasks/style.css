@@ -17,6 +17,7 @@ body {
 }
 
 .base_head {
+    margin-top: 0.1em;
     width: 100%;
     height: 2em;
     text-align: center;
