@@ -1,21 +1,14 @@
 from django import forms
+from django.contrib.auth.models import User as AuthUser
 from django.forms.extras.widgets import SelectDateWidget
 from tasks.models import TITLE_LENGTH, DESCR_LENGTH, CATEG_LENGTH
 
+# Enumeration of types of sharing
+SHARE_WRITE = 'wr'
+SHARE_READ = 'ro'
+
 USER_LENGTH = 25
 PASS_LENGTH = 30
-
-
-#class TaskForm(ModelForm):
-    #class Meta:
-        #model = Task
-        #fields = ['title', 'description', 'due_date', 'tasklist']
-
-
-#class ListForm(ModelForm):
-    #class Meta:
-        #model = TaskList
-        #fields = ['title', 'description', 'category', 'readonly_can_check']
 
 
 class ListForm(forms.Form):
@@ -56,3 +49,13 @@ class UserForm(forms.Form):
     confirm = forms.CharField(label='Confirm password',
                               max_length=PASS_LENGTH,
                               widget=forms.PasswordInput)
+
+
+class ShareForm(forms.Form):
+    username = forms.ChoiceField(label='User',
+                                 choices=((user.get_username(),
+                                           user.get_username())
+                                          for user in AuthUser.objects.all()))
+    share_mode = forms.ChoiceField(label='User can edit?',
+                                   choices=((SHARE_WRITE, 'Yes'),
+                                            (SHARE_READ, 'No')))

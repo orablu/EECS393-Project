@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from tasks.models import TaskList, Task, User
-from tasks.forms import TaskForm, ListForm, UserForm
+from tasks.forms import TaskForm, ListForm, UserForm, ShareForm
+from tasks.forms import SHARE_READ, SHARE_WRITE
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as AuthUser
 
@@ -37,19 +38,18 @@ def register(request):
                 return HttpResponseRedirect(reverse('tasks:index'))
     else:
         form = UserForm()
-    context = {'form': form, 'error': passwords_match}
-    context['logged_in'] = request.user and request.user.is_authenticated()
+    context = {'logged_in': request.user and request.user.is_authenticated(),
+               'form': form, 'error': passwords_match}
     return render(request, 'tasks/register.html', context)
 
 
 @login_required
 def index(request):
     user = request.user.user
-    context = {'name': user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'owned': user.owned.all().order_by('title'),
                'shared': user.shared.all().order_by('title'),
                'readonly': user.readonly.all().order_by('title')}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/index.html', context)
 
 
@@ -58,12 +58,11 @@ def details(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     can_edit = user_can_write(request.user.user, tasklist)
     tasks_list = tasklist.task_set.all().order_by('due_date')
-    context = {'name': request.user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'can_edit': can_edit,
                'tasklist': tasklist,
                'tasks_list': tasks_list,
                'list_id': list_id}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/details.html', context)
 
 
@@ -86,10 +85,9 @@ def add_list(request):
             return HttpResponseRedirect(reverse('tasks:index'))
     else:
         form = ListForm()
-    context = {'name': request.user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'new': True,
                'form': form}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/list.html', context)
 
 
@@ -111,11 +109,37 @@ def edit_list(request, list_id):
                                         kwargs={'list_id': tasklist.id}))
     else:
         form = ListForm()
-    context = {'name': request.user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'new': False,
                'form': form}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/list.html', context)
+
+
+@login_required
+def share_list(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    if tasklist not in request.user.user.owned.all():
+        return HttpResponseRedirect(reverse('tasks:details',
+                                            kwargs={'list_id': list_id}))
+    if request.method == 'POST':
+        form = ShareForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            authuser = AuthUser.objects.get(username__iexact=username)
+            if authuser and authuser is not request.user:
+                share_mode = form.cleaned_data['share_mode']
+                if share_mode == SHARE_WRITE:
+                    authuser.user.shared.add(tasklist)
+                elif share_mode == SHARE_READ:
+                    authuser.user.readonly.add(tasklist)
+            return HttpResponseRedirect(reverse('tasks:details',
+                                                kwargs={'list_id': list_id}))
+    else:
+        form = ShareForm()
+    context = {'logged_in': request.user and request.user.is_authenticated(),
+               'tasklist': tasklist,
+               'form': form}
+    return render(request, 'tasks/share.html', context)
 
 
 @login_required
@@ -137,11 +161,10 @@ def add_task(request, list_id):
                                         kwargs={'list_id': list_id}))
     else:
         form = TaskForm()
-    context = {'name': request.user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'tasklist': tasklist,
                'new': True,
                'form': form}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/task.html', context)
 
 
@@ -164,11 +187,10 @@ def edit_task(request, task_id):
                                         kwargs={'list_id': list_id}))
     else:
         form = TaskForm()
-    context = {'name': request.user.get_username(),
+    context = {'logged_in': request.user and request.user.is_authenticated(),
                'tasklist': task.tasklist,
                'new': False,
                'form': form}
-    context['logged_in'] = request.user and request.user.is_authenticated()
     return render(request, 'tasks/task.html', context)
 
 

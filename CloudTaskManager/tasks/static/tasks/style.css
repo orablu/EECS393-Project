@@ -214,8 +214,9 @@ h1 {
     color: #aaa;
 }
 
-.details_list {
-
+.details_edit {
+    display: block;
+    text-align: right;
 }
 
 .details_task {
