@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
 {% load staticfiles %}
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}" />
     <title>lets' do{% block pagetitle %}{% endblock %}</title>
     {% block head %}{% endblock %}
-  </head>
-  <body>
-    <div class="base_head">
-        <a class="home_link" href="{% url 'tasks:index' %}">let's<strong>do</strong></a>
-        <a class="logout_link" href="{% url 'logout' %}">
-            {% if logged_in %}log out{% else %}log in{% endif %}
-        </a>
-        <div class="extra_links">
-            {% block links %}{% endblock %}
+</head>
+<body>
+    <div class="base_titlebar">
+        <div class="base_head">
+            <div class="home_div">
+                <a class="home_link" href="{% url 'tasks:index' %}">let's<strong>do</strong></a>
+            </div>
+            <div class="extra_links">
+                {% block links %}{% endblock %}
+            </div>
+            <div class="logout_div">
+                <a class="logout_link" href="{% url 'logout' %}">
+                    {% if logged_in %}log out{% else %}log in{% endif %}
+                </a>
+            </div>
         </div>
     </div>
     <div class="base_body">
@@ -25,5 +31,5 @@
             {% block body %}{% endblock %}
         </div>
     </div>
-  </body>
+</body>
 </html>
