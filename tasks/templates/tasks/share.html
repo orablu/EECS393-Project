@@ -1,7 +1,9 @@
 {% extends "tasks/base.html" %}
 
+{% block pagetitle %}share {{ tasklist.title }}{% endblock %}
+
 {% block links %}
-    <a href="{% url 'tasks:details' tasklist.id %}">back to {{ tasklist.title }}</a>
+    <a href="{% url 'tasks:details' tasklist.id %}">&times;</a>
 {% endblock %}
 
 {% block title %}share {{ tasklist.title }}{% endblock %}

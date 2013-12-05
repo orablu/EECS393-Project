@@ -1,7 +1,9 @@
 {% extends "tasks/base.html" %}
 
+{% block pagetitle %}my lists{% endblock %}
+
 {% block links %}
-    <a href="{% url 'tasks:index' %}">Back to my lists</a>
+    <a href="{% url 'tasks:index' %}">&times;</a>
 {% endblock %}
 
 {% block title %}add a list{% endblock %}
