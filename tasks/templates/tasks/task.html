@@ -1,5 +1,7 @@
 {% extends "tasks/base.html" %}
 
+{% block pagetitle %} - {{ tasklist.title }}{% endblock %}
+
 {% block links %}
     <a href="{% url 'tasks:details' tasklist.id %}">back to {{ tasklist.title }}</a>
 {% endblock %}
@@ -10,7 +12,7 @@
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
-            <div class="form_div{% ifequal field.label 'Tasklist' %}_hidden{% endifequal %}">
+            <div class="form_div">
                 <div class="form_label">{{ field.label_tag }}</div>
                 <div class="form_error">{{ field.errors.0 }}</div>
                 <div class="form_input">{{ field }}</div>

@@ -23,7 +23,7 @@ class TaskList(models.Model):
                                    null=True,
                                    blank=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return '{0}: {1}'.format(self.title, self.description)
 
 
@@ -62,7 +62,7 @@ class Task(models.Model):
     status.admin_order_field = 'due_date'
     status.short_description = 'Status'
 
-    def __str__(self):
+    def __unicode__(self):
         return '{0}: {1}'.format(self.title, self.description)
 
 
