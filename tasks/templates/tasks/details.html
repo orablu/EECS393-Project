@@ -1,5 +1,7 @@
 {% extends "tasks/base.html" %}
 
+{% block pagetitle %} - {{ tasklist.title }}{% endblock %}
+
 {% block links %}
     <a class="add" title="Create a new task" href="{% url 'tasks:add_task' tasklist.id %}">+</a>
 {% endblock %}
