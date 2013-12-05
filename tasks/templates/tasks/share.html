@@ -3,7 +3,7 @@
 {% block pagetitle %}share {{ tasklist.title }}{% endblock %}
 
 {% block links %}
-    <a href="{% url 'tasks:details' tasklist.id %}">&times;</a>
+    <a title="Cancel" href="{% url 'tasks:details' tasklist.id %}">&times;</a>
 {% endblock %}
 
 {% block title %}share {{ tasklist.title }}{% endblock %}

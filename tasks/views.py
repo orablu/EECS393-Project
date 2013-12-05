@@ -10,6 +10,11 @@ from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth import authenticate, login
 
 
+DEFAULT_TITLE = "{0}'s list"
+DEFAULT_DESCR = "{0}'s todo list"
+DEFAULT_CATEG = 'personal'
+
+
 def user_can_write(user, tasklist):
     if tasklist in user.owned.all():
         return True
@@ -40,6 +45,11 @@ def register(request):
                     authuser = authenticate(username=username,
                                             password=password)
                     user = User(authuser=authuser)
+                    tasklist = TaskList(title=DEFAULT_TITLE.format(username),
+                                        description=DEFAULT_DESCR.format(username),
+                                        category=DEFAULT_CATEG)
+                    tasklist.save()
+                    user.owned.add(tasklist)
                     user.save()
                     login(request, authuser)
                     return HttpResponseRedirect(reverse('tasks:index'))

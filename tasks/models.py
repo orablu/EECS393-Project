@@ -80,3 +80,6 @@ class User(models.Model):
 
     def get_name(self):
         return self.authuser.get_full_name()
+
+    def __unicode__(self):
+        return 'User: {0}'.format(self.get_username())
