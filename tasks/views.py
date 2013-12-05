@@ -29,6 +29,7 @@ def user_can_write(user, tasklist):
 def register(request):
     p_err = False
     u_err = False
+    errmsg = None
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
@@ -45,20 +46,24 @@ def register(request):
                     authuser = authenticate(username=username,
                                             password=password)
                     user = User(authuser=authuser)
+                    user.save()
+                    login(request, authuser)
                     tasklist = TaskList(title=DEFAULT_TITLE.format(username),
                                         description=DEFAULT_DESCR.format(username),
                                         category=DEFAULT_CATEG)
                     tasklist.save()
                     user.owned.add(tasklist)
                     user.save()
-                    login(request, authuser)
                     return HttpResponseRedirect(reverse('tasks:index'))
-                except:
+                except Error as (errno, strerr):
                     u_err = True
+                    errmsg = strerr
     else:
         form = UserForm()
     context = {'logged_in': request.user and request.user.is_authenticated(),
                'form': form, 'perr': p_err, 'uerr': u_err}
+    if errmsg:
+        context['serr'] = errmsg
     return render(request, 'tasks/register.html', context)
 
 
