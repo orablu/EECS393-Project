@@ -30,7 +30,7 @@ body {
 }
 
 .base_head .home_div {
-    width: 32%;
+    width: 30%;
     display: inline-block;
     text-align: left;
 }
@@ -39,7 +39,7 @@ body {
 }
 
 .base_head .logout_div {
-    width: 32%;
+    width: 30%;
     display: inline-block;
     text-align: right;
 }
@@ -48,7 +48,7 @@ body {
 }
 
 .base_head .extra_links {
-    width: 32%;
+    width: 30%;
     display: inline-block;
     float: center;
 }
