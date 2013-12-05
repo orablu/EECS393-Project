@@ -1,5 +1,7 @@
 {% extends "tasks/base.html" %}
 
+{% block pagetitle %} - {{ tasklist.title }}{% endblock %}
+
 {% block links %}
     <a href="{% url 'tasks:details' tasklist.id %}">back to {{ tasklist.title }}</a>
 {% endblock %}

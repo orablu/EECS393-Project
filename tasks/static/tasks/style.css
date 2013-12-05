@@ -4,6 +4,7 @@
 
 body {
     font-family: sans-serif;
+    font-size: 11pt;
     background-color: #f2f2f2;
 }
 
@@ -84,6 +85,7 @@ a:active {
 }
 
 h1 {
+    font-size: 200%;
     text-align: center;
     margin-left: 0em;
     margin-top: 0.3em;
@@ -216,10 +218,12 @@ h1 {
 
 .details_edit {
     display: block;
+    font-size: 90%;
     text-align: right;
 }
 
 .details_task {
+    font-size: 100%;
     margin-left: 0.1em;
     margin-bottom: 0.3em;
 }
