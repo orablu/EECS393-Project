@@ -6,6 +6,7 @@ from tasks.forms import TaskForm, ListForm, UserForm, ShareForm
 from tasks.forms import SHARE_READ, SHARE_WRITE
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth import authenticate, login
 
 
 def user_can_write(user, tasklist):
@@ -20,7 +21,8 @@ def user_can_write(user, tasklist):
 
 
 def register(request):
-    passwords_match = True
+    p_err = False
+    u_err = False
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
@@ -28,18 +30,24 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             confirm = form.cleaned_data['confirm']
-            passwords_match = password == confirm
-            if passwords_match:
-                authuser = AuthUser.objects.create_user(username,
-                                                        email,
-                                                        password)
-                user = User(authuser=authuser)
-                user.save()
-                return HttpResponseRedirect(reverse('tasks:index'))
+            p_err = password != confirm
+            if not p_err:
+                try:
+                    AuthUser.objects.create_user(username,
+                                                 email,
+                                                 password)
+                    authuser = authenticate(username=username,
+                                            password=password)
+                    user = User(authuser=authuser)
+                    user.save()
+                    login(request, authuser)
+                    return HttpResponseRedirect(reverse('tasks:index'))
+                except:
+                    u_err = True
     else:
         form = UserForm()
     context = {'logged_in': request.user and request.user.is_authenticated(),
-               'form': form, 'error': passwords_match}
+               'form': form, 'perr': p_err, 'uerr': u_err}
     return render(request, 'tasks/register.html', context)
 
 
@@ -108,7 +116,10 @@ def edit_list(request, list_id):
             return HttpResponseRedirect(reverse('tasks:details',
                                         kwargs={'list_id': tasklist.id}))
     else:
-        form = ListForm()
+        form = ListForm(initial={'title': tasklist.title,
+                                 'description': tasklist.description,
+                                 'category': tasklist.category,
+                                 'readonly': tasklist.readonly_can_check})
     context = {'logged_in': request.user and request.user.is_authenticated(),
                'new': False,
                'form': form}
@@ -186,7 +197,10 @@ def edit_task(request, task_id):
             return HttpResponseRedirect(reverse('tasks:details',
                                         kwargs={'list_id': list_id}))
     else:
-        form = TaskForm()
+        form = TaskForm(initial={'title': task.title,
+                                 'description': task.description,
+                                 'category': task.category,
+                                 'due_date': task.due_date})
     context = {'logged_in': request.user and request.user.is_authenticated(),
                'tasklist': task.tasklist,
                'new': False,

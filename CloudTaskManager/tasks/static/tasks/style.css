@@ -278,11 +278,9 @@ h1 {
 }
 
 .details_delete {
-
 }
 
 .details_edit {
-
 }
 
 
@@ -319,6 +317,7 @@ h1 {
 
 .form_input input, textarea {
     max-height: 80px;
+    max-width: 100%;
     width: 100%;
     font-size: 150%;
     background-color: #f2f2f2;

@@ -3,6 +3,12 @@
 {% block title %}create an account{% endblock %}
 
 {% block body %}
+    {% if perr %}
+        <div class="login_error">Passwords do not match. Please try again.</div>
+    {% endif %}
+    {% if uerr %}
+        <div class="login_error">Username already exists. Please choose another.</div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
