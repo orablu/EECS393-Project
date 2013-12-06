@@ -128,7 +128,7 @@ def edit_list(request, list_id):
     else:
         form = ListForm(initial={'title': tasklist.title,
                                  'description': tasklist.description,
-                                 'category': tasklist.category)
+                                 'category': tasklist.category})
     context = {'logged_in': True,
                'new': False,
                'form': form}
