@@ -276,7 +276,7 @@ class TaskListMethodTests(TestCase):
         self.assertTemplateUsed(request, 'tasks/login.html')
         self.assertEqual(request.status_code, 200)
         request = self.client.post('/url/to/view', follow=True)
-        self.assertEqual(request.status_code, 404)
+        self.assertTemplateUsed(request, 'tasks/login.html')
 
     def test_user_login_again(self):
         request = self.client.get('/register/', follow=True)
