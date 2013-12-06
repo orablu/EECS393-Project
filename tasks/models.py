@@ -21,6 +21,7 @@ class TaskList(models.Model):
     description = models.CharField(max_length=DESCR_LENGTH,
                                    null=True,
                                    blank=True)
+    readonly_can_check = Models.BooleanField(READONLY_STR, default=False)
 
     def __unicode__(self):
         return '{0}: {1}'.format(self.title, self.description)
