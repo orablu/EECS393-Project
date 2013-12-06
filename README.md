@@ -1,6 +1,13 @@
 # let's-**do**
 
-[let's-**do**](http://lets-do.herokuapp.com) is a social task manager webapp. It was written for Case Western Reserve University EESC 393 Project by Wes Rupert, Shelley Murphy and Charles Marshall. Project is written in HMTL/Django and intended for mobile platforms.
+[let's-**do**](http://lets-do.herokuapp.com/) is a social task manager webapp. It was written for Case Western Reserve University's EECS 393 class by Wes Rupert, Shelley Murphy and Charles Marshall.
+
+Project resources:
+* [Python 2.7](http://python.org/)
+* [Django](https://www.djangoproject.com/)
+* [Heroku](https://id.heroku.com/login)
+
+It has been designed with mobile platforms in mind.
 
 
 # User Manual
