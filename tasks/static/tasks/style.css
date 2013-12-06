@@ -31,7 +31,7 @@ body {
 .base_head .home_div {
     width: 30%;
     display: inline-block;
-    vertical-align: center;
+    margin-top: 0.4em;
     text-align: left;
 }
 
@@ -41,7 +41,7 @@ body {
 .base_head .logout_div {
     width: 30%;
     display: inline-block;
-    vertical-align: center;
+    margin-top: 0.4em;
     text-align: right;
 }
 
@@ -51,7 +51,7 @@ body {
 .base_head .extra_links {
     width: 30%;
     display: inline-block;
-    vertical-align: center;
+    margin-top: 0.4em;
     float: center;
 }
 
@@ -115,7 +115,11 @@ h1 {
 }
 
 .add {
-    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #0f475f;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    border-radius: 4px;
 }
 
 
@@ -209,18 +213,18 @@ h1 {
  */
 
 .details_summary {
-    color: #888;
     margin-bottom: 1em;
     display: inline-block;
     width: 80%;
 }
 
 .details_description {
+    color: #888;
     font-size: 1.5em;
 }
 
 .details_category {
-    margin-bottom: 0.3em;
+    color: #888;
 }
 
 .details_editlist {
@@ -232,6 +236,7 @@ h1 {
 .details_edit {
     display: block;
     font-size: 0.8em;
+    font-weight: bold;
     text-align: right;
 }
 
@@ -287,6 +292,13 @@ h1 {
 }
 
 .details_due {
+}
+
+.details_taskcate {
+}
+
+.details_task .details_taskcate {
+    color: #888;
 }
 
 .details_taskdesc {

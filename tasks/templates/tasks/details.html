@@ -10,12 +10,12 @@
 
 {% block body %}
     <div class="details_summary">
-        <div class="details_description">{{ tasklist.description }}</div>
         <div class="details_category">Category: {{ tasklist.category }}</div>
+        <div class="details_description">{{ tasklist.description }}</div>
     </div>
     <div class="details_editlist">
-        <div class="details_edit"><a href="{% url 'tasks:share_list' tasklist.id %}">share</a></div>
-        <div class="details_edit"><a href="{% url 'tasks:edit_list' tasklist.id %}">edit</a></div>
+        <div class="details_share"><a href="{% url 'tasks:share_list' tasklist.id %}">share</a></div>
+        <div class="details_share"><a href="{% url 'tasks:edit_list' tasklist.id %}">edit</a></div>
     </div>
 	<div class="details_list">
         {% for task in tasks_list %}
@@ -28,6 +28,7 @@
             <div class="details_tasksumm">
                 <div class="details_title">{{ task.title }}</div>
                 {% if task.due_date %}<div class="details_due">Due: {{ task.due_date|date:"m/d/y" }}</div>{% endif %}
+                {% if task.category %}<div class="details_taskcate">Category: {{ tasklist.category }}</div>{% endif %}
                 {% if task.description %}<div class="details_taskdesc">{{ task.description }}</div>{% endif %}
             </div>
             <div class="details_modify">
