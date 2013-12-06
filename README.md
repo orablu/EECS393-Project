@@ -21,7 +21,8 @@ To edit a task list, make sure you are on its page, before going to the right of
 
 ## Deleting a task list
 On your homepage, find the task list you wish to delete. On the right of the screen, there is an X at the level of the task list. Clicking this will delete the task list.
-Creating new tasks
+
+## Creating new tasks
 While viewing the tasks in the task list you wish to add a task to, click the small plus sign in the top middle of the screen. You will be taken to a new task page. The title and description of the task are required, but the category and due date can be left off if desired. Click “Save Task” to save your task and see it show up as a task on your current task list.
 
 ## Tasks with due dates
