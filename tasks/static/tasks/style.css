@@ -17,12 +17,10 @@ body {
 }
 
 .base_head {
-    margin-top: 0.1em;
     width: 100%;
     height: 2em;
     text-align: center;
     color: lightgrey;
-    font-size: 1.5em;
 }
 
 .base_head a {
@@ -114,6 +112,7 @@ h1 {
 }
 
 .add {
+    font-size: 1.5em;
     margin-top: 0.3em;
 }
 
@@ -237,16 +236,27 @@ h1 {
 .details_task {
     font-size: 1em;
     margin-left: 0.1em;
-    margin-bottom: 0.3em;
+    margin-bottom: 1.5em;
+    vertical-align: top;
 }
 
 .details_task_late {
     color: red;
     margin-left: 0.1em;
-    margin-bottom: 0.3em;
+    margin-bottom: 1.5em;
+    vertical-align: top;
 }
 
-.statusTrue {
+.details_taskstatus {
+    display: inline-block;
+    width: 20px;
+    margin-left: 0.1em;
+    vertical-align: top;
+    padding-top: 0.1em;
+    margin-right: 0.2em;
+}
+
+.details_statusTrue {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -267,20 +277,17 @@ h1 {
 .details_tasksumm {
     margin-bottom: 0.1em;
     display: inline-block;
-    width: 80%;
+    width: 70%;
 }
 
 .details_title {
-    display: inline-block;
     font-size: 1.25em;
 }
 
 .details_due {
-    margin-left: 1em;
 }
 
 .details_taskdesc {
-    margin-left: 1em;
 }
 
 .details_task .details_taskdesc {

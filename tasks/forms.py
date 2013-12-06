@@ -51,10 +51,7 @@ class UserForm(forms.Form):
 
 
 class ShareForm(forms.Form):
-    username = forms.ChoiceField(label='User',
-                                 choices=((user.get_username(),
-                                           user.get_username())
-                                          for user in User.objects.all()))
+    username = forms.CharField(label='User', max_length=USER_LENGTH)
     share_mode = forms.ChoiceField(label='User can edit?',
                                    choices=((SHARE_WRITE, 'Yes'),
                                             (SHARE_READ, 'No')))

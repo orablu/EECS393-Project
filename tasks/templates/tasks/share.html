@@ -9,6 +9,9 @@
 {% block title %}share {{ tasklist.title }}{% endblock %}
 
 {% block body %}
+    {% if uerr %}
+        <div class="login_error">Username not found. Please try again.</div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
