@@ -1,12 +1,9 @@
-# let's**do**
+# let's-**do**
 
-[Let's**do**](http://lets-do.herokuapp.com) is a social task manager webapp. It was written for Case Western Reserve University EESC 393 Project by Wes Rupert, Shelley Murphy and Charles Marshall. Project is written in HMTL/Django and intended for mobile platforms.
+[let's-**do**](http://lets-do.herokuapp.com) is a social task manager webapp. It was written for Case Western Reserve University EESC 393 Project by Wes Rupert, Shelley Murphy and Charles Marshall. Project is written in HMTL/Django and intended for mobile platforms.
 
 
 # User Manual
----
-User's Manual for let's do
-Charles Marshall, Shelley Murphy, Wes Rupert
 
 ## Creating a new user
 When first coming to the site, you are prompted for your username and password. Assuming this is your first time on the site, you will need to make a new profile. The text at the bottom that says “Sign up now” is a link that, when clicked, will take you to a registration page. You will need to provide all the information requested, then click the button that says “Sign up” to register your account.
@@ -47,7 +44,6 @@ When a list is shared with a user, if they are given the right to edit, they wil
 
 
 # Testing report
----
     Name           Stmts   Miss  Cover   Missing
     --------------------------------------------
     tasks              0      0   100%   
