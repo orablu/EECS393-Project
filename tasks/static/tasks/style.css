@@ -31,6 +31,7 @@ body {
 .base_head .home_div {
     width: 30%;
     display: inline-block;
+    vertical-align: center;
     text-align: left;
 }
 
@@ -40,6 +41,7 @@ body {
 .base_head .logout_div {
     width: 30%;
     display: inline-block;
+    vertical-align: center;
     text-align: right;
 }
 
@@ -49,6 +51,7 @@ body {
 .base_head .extra_links {
     width: 30%;
     display: inline-block;
+    vertical-align: center;
     float: center;
 }
 
@@ -256,7 +259,7 @@ h1 {
     margin-right: 0.2em;
 }
 
-.details_statusTrue {
+.statusTrue {
     display: inline-block;
     width: 20px;
     height: 20px;

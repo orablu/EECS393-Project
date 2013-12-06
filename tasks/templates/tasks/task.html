@@ -3,7 +3,7 @@
 {% block pagetitle %}{{ tasklist.title }}{% endblock %}
 
 {% block links %}
-    <a title="Cancel" href="{% url 'tasks:details' tasklist.id %}">&times;</a>
+    <a class="add" title="Cancel" href="{% url 'tasks:details' tasklist.id %}">&times;</a>
 {% endblock %}
 
 {% block title %}{% if new %}add a task{% else %}edit task{% endif %}{% endblock %}
