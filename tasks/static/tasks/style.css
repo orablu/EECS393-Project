@@ -158,7 +158,7 @@ h1 {
 .login_input input, textarea, select {
     width: 100%;
     font-size: 1.5em;
-    background-color: #f2f2f2;
+    background-color: #f4f4f4;
     color: #888;
     border: none;
     border-bottom: thin solid darkgrey;
@@ -350,7 +350,7 @@ h1 {
     max-width: 100%;
     width: 100%;
     font-size: 1.5em;
-    background-color: #f2f2f2;
+    background-color: #f4f4f4;
     color: #888;
     border: none;
     border-bottom: thin solid darkgrey;
