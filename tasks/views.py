@@ -95,11 +95,9 @@ def add_list(request):
             title = form.cleaned_data['title']
             description = form.cleaned_data['description']
             category = form.cleaned_data['category']
-            readonly = form.cleaned_data['readonly']
             tasklist = TaskList(title=title,
                                 description=description,
-                                category=category,
-                                readonly_can_check=readonly)
+                                category=category)
             tasklist.save()
             user = request.user.user
             user.owned.add(tasklist)
@@ -124,15 +122,13 @@ def edit_list(request, list_id):
             tasklist.title = form.cleaned_data['title']
             tasklist.description = form.cleaned_data['description']
             tasklist.category = form.cleaned_data['category']
-            tasklist.readonly_can_check = form.cleaned_data['readonly']
             tasklist.save()
             return HttpResponseRedirect(reverse('tasks:details',
                                         kwargs={'list_id': tasklist.id}))
     else:
         form = ListForm(initial={'title': tasklist.title,
                                  'description': tasklist.description,
-                                 'category': tasklist.category,
-                                 'readonly': tasklist.readonly_can_check})
+                                 'category': tasklist.category)
     context = {'logged_in': True,
                'new': False,
                'form': form}
@@ -230,9 +226,8 @@ def check_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     id = task.tasklist.id
     if not user_can_write(request.user.user, task.tasklist):
-        if not task.tasklist.readonly_can_check:
-            return HttpResponseRedirect(reverse('tasks:details',
-                                        kwargs={'list_id': id}))
+        return HttpResponseRedirect(reverse('tasks:details',
+                                    kwargs={'list_id': id}))
     task.is_completed = not task.is_completed
     task.save()
     return HttpResponseRedirect(reverse('tasks:details',

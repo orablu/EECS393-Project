@@ -19,7 +19,6 @@ class ListForm(forms.Form):
                                   required=False)
     category = forms.CharField(label='Category',
                                max_length=CATEG_LENGTH, required=False)
-    readonly = forms.BooleanField(label='Shared can edit?', required=False)
 
 
 class TaskForm(forms.Form):
