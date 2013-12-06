@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User as AuthUser
 from django.forms.extras.widgets import SelectDateWidget
-from tasks.models import TITLE_LENGTH, DESCR_LENGTH, CATEG_LENGTH
+from tasks.models import User, TITLE_LENGTH, DESCR_LENGTH, CATEG_LENGTH
 
 # Enumeration of types of sharing
 SHARE_WRITE = 'wr'
@@ -55,7 +54,7 @@ class ShareForm(forms.Form):
     username = forms.ChoiceField(label='User',
                                  choices=((user.get_username(),
                                            user.get_username())
-                                          for user in AuthUser.objects.all()))
+                                          for user in User.objects.all()))
     share_mode = forms.ChoiceField(label='User can edit?',
                                    choices=((SHARE_WRITE, 'Yes'),
                                             (SHARE_READ, 'No')))
