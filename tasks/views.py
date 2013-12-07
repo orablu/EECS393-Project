@@ -136,6 +136,19 @@ def edit_list(request, list_id):
 
 
 @login_required
+def delete_list(request, list_id):
+    tasklist = get_object_or_404(TaskList, pk=list_id)
+    user = request.user.user
+    if tasklist in user.owned.all():
+        tasklist.delete()
+    elif tasklist in user.shared.all():
+        user.shared.remove(tasklist)
+    elif tasklist in user.readonly.all():
+        user.readonly.remove(tasklist)
+    return HttpResponseRedirect(reverse('tasks:index'))
+
+
+@login_required
 def share_list(request, list_id):
     tasklist = get_object_or_404(TaskList, pk=list_id)
     context = {'logged_in': True,
@@ -232,21 +245,6 @@ def check_task(request, task_id):
     task.save()
     return HttpResponseRedirect(reverse('tasks:details',
                                 kwargs={'list_id': id}))
-
-
-@login_required
-def delete_list(request, list_id):
-    tasklist = get_object_or_404(TaskList, pk=list_id)
-    user = request.user.user
-    if not user_can_write(user, tasklist):
-        return HttpResponseRedirect(reverse('tasks:index'))
-    if tasklist in user.owned.all():
-        tasklist.delete()
-    elif tasklist in user.shared.all():
-        user.shared.remove(tasklist)
-    elif tasklist in user.readonly.all():
-        user.readonly.remove(tasklist)
-    return HttpResponseRedirect(reverse('tasks:index'))
 
 
 @login_required
